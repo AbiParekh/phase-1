@@ -1,0 +1,2 @@
+this is a sample text file from VS to Github 
+this is a new line
