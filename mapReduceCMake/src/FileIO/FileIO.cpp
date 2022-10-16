@@ -33,6 +33,7 @@ bool FileIOManagement::writeVectorToFile(const std::string filePath, const std::
 }
 
 
+
 bool FileIOManagement::readFileIntoVector(const std::string filePath, const std::string fileName, std::vector<std::string>& items)
 {
 	if (!canAccessFile(filePath, fileName))
@@ -61,6 +62,8 @@ bool FileIOManagement::readFileIntoVector(const std::string filePath, const std:
 	return true;
 }
 
+
+
 bool FileIOManagement::canAccessFile(const std::string& filePath, const std::string& fileName)
 {
 	std::string current_path = (std::filesystem::current_path()).string();
@@ -69,9 +72,8 @@ bool FileIOManagement::canAccessFile(const std::string& filePath, const std::str
 	return infile.good();
 }
 
-/// <summary>
-/// Validates the Directory Exist and is a Directory
-/// </summary>
+
+
 bool FileIOManagement::validDirectory(const std::string& folderPath)
 {
 	std::string current_path = (std::filesystem::current_path()).string();
@@ -94,7 +96,8 @@ bool FileIOManagement::validDirectory(const std::string& folderPath)
 }
 
 
-bool FileIOManagement::getListOfTextFiles(std::string inputFolder, std::vector<std::string>& fileList)
+
+bool FileIOManagement::getListOfTextFiles(const std::string& inputFolder, std::vector<std::string>& fileList)
 {
 	if (validDirectory(inputFolder))
 	{
@@ -113,6 +116,41 @@ bool FileIOManagement::getListOfTextFiles(std::string inputFolder, std::vector<s
 			}	
 		}
 			
+	}
+	return true;
+}
+
+
+bool FileIOManagement::getListOfTextFilesBasedOnStart(const std::string& inputFolder, const std::string& startingSubString, std::vector<std::string>& fileList)
+{
+	if (validDirectory(inputFolder))
+	{
+		for (const auto& entry : fs::directory_iterator(inputFolder))
+		{
+#ifdef PRINT_DEBUG
+			std::cout << "entry.path() = " << entry.path() << ", entry.path().filename(): " << entry.path().filename() << ", extension: " << entry.path().extension() << std::endl;
+#endif
+			if ((entry.path().has_extension()) && (entry.path().extension().string().compare(".txt") == 0))
+			{
+				std::string tempFileName = entry.path().filename().string();
+				
+				// Ensure the File Name is not smaller then the substring before attempting check
+				if (tempFileName.size() > startingSubString.size())
+				{
+					//Find the Starting String and Verify it starts at Position 0
+					size_t pos = tempFileName.find(startingSubString);
+					if (pos != std::string::npos && pos == 0)
+					{
+						fileList.push_back(entry.path().filename().string());
+					}
+				}
+			}
+			else
+			{
+				std::cout << "Ignoring the file " << entry.path().filename() << " as it is not a text file " << std::endl;
+			}
+		}
+
 	}
 	return true;
 }

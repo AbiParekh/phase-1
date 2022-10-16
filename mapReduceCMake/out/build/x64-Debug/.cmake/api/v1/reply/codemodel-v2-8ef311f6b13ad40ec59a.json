@@ -6,12 +6,26 @@
 			[
 				{
 					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.8"
 					},
 					"projectIndex" : 0,
-					"source" : ".",
+					"source" : "."
+				},
+				{
+					"build" : "src",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "src",
 					"targetIndexes" : 
 					[
 						0
@@ -22,11 +36,23 @@
 			"projects" : 
 			[
 				{
+					"childIndexes" : 
+					[
+						1
+					],
 					"directoryIndexes" : 
 					[
 						0
 					],
-					"name" : "mapReduceCMake",
+					"name" : "mapReduceCMake"
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "mapReducer",
+					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
 						0
@@ -36,11 +62,11 @@
 			"targets" : 
 			[
 				{
-					"directoryIndex" : 0,
-					"id" : "mapReduceCMake::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-mapReduceCMake-Debug-de704b8765b02e657eab.json",
-					"name" : "mapReduceCMake",
-					"projectIndex" : 0
+					"directoryIndex" : 1,
+					"id" : "mapReducer::@145eef247bfb46b6828c",
+					"jsonFile" : "target-mapReducer-Debug-a2a9915cdd863c0d5206.json",
+					"name" : "mapReducer",
+					"projectIndex" : 1
 				}
 			]
 		}
