@@ -3,7 +3,9 @@
 #define _Source_h_
 
 #include <iostream>
-#include "Map.h"
+#include "Map/Map.h"
+#include "FileIO/fileIO.h"
+#include "sorter/sorter.h"
 #include <string>
 #include <regex>
 #include <locale>
