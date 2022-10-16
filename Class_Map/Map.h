@@ -33,7 +33,10 @@ ostream& operator<<(ostream& os, const tokenPair& tp);
 class Map
 {
 public:
+
+	//ostream operator for testing ( cout << map::obj )
 	friend ostream& operator<<(ostream& os, const tokenPair& tp);
+
 	//default constructor
 	Map();
 
@@ -43,27 +46,25 @@ public:
 	//Destructor
 	~Map(); 
 
-	//returns word at token index
-	tokenPair getToken(int index);
-
-	
-
 	//tokenizes words, accepts a key(filename) and value(single line) from fileIO
 	void map(string filename, string inputLine);
 
 	//accepts key(filename) and value(vector of tokenized strings) sends to output when buffer is full
-	//void export(string filename, vector<string> tokens);
-	void exportTokens(string filename, string token);
+	void bufferTokens(string filename, string token);
+
 	//empties buffer
 	bool emptyCache();
+
+	vector<string>& mapExport(); //copy exportBuffer and clear it's contents
 
 	// converts a string into lowercase
 	string lowerCase(const string&); 
 
 private:
 	int bufferSize{ 10 }; //size of buffer
-	vector<string> tokens{ 10 }; //formated ("token1",1),("token2",2),... 
+	vector<string> exportBuffer; //formatted as string of tokens ("token1",1),("token2",2),... 
 	vector<tokenPair> tokenWords; //private data member tokenPair ("",int)
+	bool bufferExported{ false }; //clears exportBuffer when true
 	int maxBufferSize{};
 
 };
