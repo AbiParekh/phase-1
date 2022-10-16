@@ -1,0 +1,14 @@
+# ninja log v5
+0	6	0	clean	9992afb1f91dc381
+3	409	6875855225413179	CMakeFiles/mapReduceCMake.dir/mapReduceCMake.cpp.obj	8ce53921709f26f3
+0	668	6875855227996270	CMakeFiles/mapReduceCMake.dir/FileIO/fileIO.cpp.obj	eab1c867b88ee775
+668	864	6875855229871265	../../../build/bin/mapReduceCMake.exe	ce5673c81af3546f
+0	7	0	clean	9992afb1f91dc381
+0	5	0	clean	9992afb1f91dc381
+3	563	6875857407896590	CMakeFiles/mapReduceCMake.dir/mapReduceCMake.cpp.obj	8ce53921709f26f3
+0	719	6875857409462748	CMakeFiles/mapReduceCMake.dir/FileIO/fileIO.cpp.obj	eab1c867b88ee775
+719	840	6875857410419854	../../../build/bin/mapReduceCMake.exe	ce5673c81af3546f
+0	6	0	clean	9992afb1f91dc381
+0	549	6875857680638191	CMakeFiles/mapReduceCMake.dir/mapReduceCMake.cpp.obj	8ce53921709f26f3
+3	711	6875857682273793	CMakeFiles/mapReduceCMake.dir/FileIO/fileIO.cpp.obj	eab1c867b88ee775
+711	827	6875857683201340	../../../build/bin/mapReduceCMake.exe	ce5673c81af3546f

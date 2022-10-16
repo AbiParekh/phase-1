@@ -1,0 +1,5 @@
+# ninja log v5
+0	6	0	clean	9992afb1f91dc381
+2	531	6875855385041456	CMakeFiles/mapReduceCMake.dir/mapReduceCMake.cpp.obj	68a7506513764101
+0	1010	6875855389818664	CMakeFiles/mapReduceCMake.dir/FileIO/fileIO.cpp.obj	57b3c8db4318f6ff
+1010	1207	6875855391721350	mapReduceCMake.exe	dd386e3a3f5732c3

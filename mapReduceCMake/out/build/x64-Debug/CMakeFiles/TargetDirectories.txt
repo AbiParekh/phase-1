@@ -1,0 +1,3 @@
+C:/Users/steph/source/repos/phase-1/mapReduceCMake/out/build/x64-Debug/CMakeFiles/mapReduceCMake.dir
+C:/Users/steph/source/repos/phase-1/mapReduceCMake/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/steph/source/repos/phase-1/mapReduceCMake/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
