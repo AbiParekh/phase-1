@@ -1,1 +1,0 @@
-("hi",1),("i",1),("was",1), ("all",1),("caps",1),("this",1), ("is",1),("a",1),("simple",1), ("str",1),("ng",1),("with",1), ("random",1),("punctuation",1),("thr0ughout",1), ("12345",1),("6789",1),("comma",1), ("ellipse",1),("space",1),("tab",1), ("t",1),("hyphon",1),("underscore",1), ("nnewline",1),("apostrophy",1),("s",1), 

@@ -69,10 +69,13 @@ public:
 
 	//Write contents of Buffer to file using FileIO
 	//Buffer is emptied on this call. Returns true on success
-	bool exportMap(string filename);
+	bool exportMap(const string filename);
+	bool exportMap(const string filename, int index);
 
 	// converts a string into lowercase
 	string lowerCase(const string&); 
+
+	string appendFileIndex(const string filename, int index);
 
 private:
 	int bufferSize{ 10 }; //size of buffer
@@ -83,6 +86,7 @@ private:
 	string inputDirectory;
 	string tempDirectory;
 	FileIOManagement exportMap_FileManager;
+	int fileIndex{ 0 }; // a running counter to index large files broken into smaller tempFiles
 
 };
 

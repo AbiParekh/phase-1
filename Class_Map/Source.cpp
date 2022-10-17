@@ -2,7 +2,7 @@
 #include "Source.h"
 #include <filesystem>
 
-#define BufferSize 3 //number of elements per row
+#define BufferSize 10 //number of elements per row
 namespace fs = std::filesystem;
 
 int main()
@@ -34,10 +34,14 @@ int main()
 				//Map Function --> Map
 				myBook.map(fileList.at(fileCount), lines.at(fileLine));
 			}
+			//Map Function --> Export
+			myBook.exportMap(fileList.at(fileCount), 0); //export remaining contents of file and set index to 0
 			lines.empty();
+
 		}
-		//Map Function --> Export
-		fileManager.writeVectorToFile(middleDirectory, fileList.at(fileCount), myBook.exportMap());
+		
+		//using exportMap with vector<string> return method
+		//fileManager.writeVectorToFile(middleDirectory, fileList.at(fileCount), myBook.exportMap());
 	}
 
 }

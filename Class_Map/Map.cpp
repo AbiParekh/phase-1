@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using std::string;
 using std::vector;
@@ -47,15 +48,17 @@ void Map::map(const string filename, const string strCAPS)
 			}
 		}
 	}
+	//exportMap(filename); //flushes any remaining data from string and writes to temp file;
+
 };
 
-void Map::bufferTokens(string filename, string token)
+void Map::bufferTokens(const string filename, string token)
 {
 	tokenWords.push_back(std::make_pair(token, 1));
 	if (tokenWords.size() == maxBufferSize) // Buffer reached dump to FileIO
 	{
-		emptyCache();
-		//To-do: alert flag/lock that cache is full
+		cout << "cache is full, exporting to file" << endl;
+		exportMap(filename);
 	}
 };
 
@@ -87,27 +90,44 @@ bool Map::emptyCache()
 	return isEmpty;
 }
 
-//Returns vector of Strings by reference
-//implementation requires user to handle FileIO
-vector<string>& Map::exportMap() 
-{
-	emptyCache();
-	bufferExported = true;
-	return exportBuffer;
-}
 
 //uses FileIO to writeVectorToFile, returns true upon success
-bool Map::exportMap(const string filename)
+bool Map::exportMap(const string fileName)
+{
+	return exportMap(fileName, fileIndex); //if no index provided use curent
+}
+
+bool Map::exportMap(const string fileName, int index)
 {
 	emptyCache();
+	//string tempFile = fileName;
+	fileIndex = index; 
+
+	string tempFile = appendFileIndex(fileName, fileIndex++);
 
 	//writes contents of buffer to file in temp directory
-	exportMap_FileManager.writeVectorToFile(this->tempDirectory, filename, exportBuffer); 
-
+	exportMap_FileManager.writeVectorToFile(this->tempDirectory, tempFile, exportBuffer); 
+	cout << "Map has exported file: " << this->tempDirectory << '/' << tempFile << endl;
 	//temp flag indicating buffer to be emptied on next call to emptyCache
 	bufferExported = true;
 
 	return true;
+}
+
+//creates partitioned file names for temp write to file
+
+string Map::appendFileIndex(const string filename, int index)
+{
+	string tempFile = filename;
+	size_t lastdot = filename.find_last_of("."); //finds extension if any in file
+	if (lastdot == std::string::npos) //filename has no extensions
+	{
+		return filename + '-' + std::to_string(index);
+	}
+	else //need to append index before extension from file
+	{
+		return filename.substr(0, lastdot) + '-' + std::to_string(index) + filename.substr(lastdot);
+	}
 }
 
 string Map::lowerCase(const string& input)
