@@ -1,15 +1,17 @@
 
 #include "Source.h"
-#include "FileIO/fileIO.h"
+#include <filesystem>
 
 #define BufferSize 10 //number of elements per row
-
+namespace fs = std::filesystem;
 
 int main()
 {
-	string inputDirectory{ "C:\\Users\\esevieux\\source\\repos\\MapReduce_CMake_Project1\\demo\\inputDir" };
-	string intermediateDirectory{ "C:\\Users\\esevieux\\source\\repos\\MapReduce_CMake_Project1\\demo\\middleDir" };
-	string outputDirectory{ "C:\\Users\\esevieux\\source\\repos\\MapReduce_CMake_Project1\\demo\\outputDir" };
+	string path = fs::current_path().parent_path().parent_path().generic_string();
+
+	string inputDirectory{ path + "/demo/inputDir" };
+	string intermediateDirectory { path + "/demo/middleDir" };
+	string outputDirectory{ path +  "/demo/outputDir" };
 
 
 	//each word trimmed and indexed in a vector

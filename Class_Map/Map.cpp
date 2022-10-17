@@ -83,7 +83,6 @@ bool Map::emptyCache()
 	}
 }
 
-
 vector<string>& Map::mapExport()
 {
 	emptyCache();
