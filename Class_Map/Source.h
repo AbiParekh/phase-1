@@ -2,15 +2,12 @@
 #ifndef _Source_h_
 #define _Source_h_
 
-#include <iostream>
 #include "Map.h"
-#include "fileIO.h"
-#include "sorter.h"
-#include "fileIO.h"
+#include "MapReduceSorter.h"
+#include "FileIO.h"
 
 #include <string>
 #include <regex>
-#include <locale>
 
 using std::cout;
 using std::cin;

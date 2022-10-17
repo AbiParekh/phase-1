@@ -12,11 +12,16 @@ using std::endl;
 using std::getline;
 
 Map::Map()
-	:maxBufferSize{ 10 }
+	:maxBufferSize{ 10 } // defaults sizeOfBuffer
 {};
 
-Map::Map(int n)
-	:maxBufferSize{ n }
+
+Map::Map(const string intermediate)
+	: tempDirectory { intermediate }, maxBufferSize {10} 
+{};
+
+Map::Map(const string intermediate, int sizeOfBuffer)
+	: tempDirectory{ intermediate }, maxBufferSize{ sizeOfBuffer }
 {};
 
 Map::~Map()
@@ -57,11 +62,11 @@ void Map::bufferTokens(string filename, string token)
 bool Map::emptyCache()
 {
 	bool isEmpty = true;
-	int index = exportBuffer.size();
+	size_t index = exportBuffer.size();
 
 	if (tokenWords.size() > 0)
 	{
-		if (bufferExported) //clears buffer after write to file. Move construct would be better in mapExport
+		if (bufferExported) //clears buffer after write to file. Move construct would be better in exportMap
 		{
 			exportBuffer.resize(0);
 			index = exportBuffer.size(); //implicitly set index back to zero
@@ -78,19 +83,31 @@ bool Map::emptyCache()
 			exportBuffer[index] += "(\"" + tokenWords[i].first + "\"," + std::to_string(tokenWords[i].second) + ")";
 		}
 		tokenWords.erase(tokenWords.begin(), tokenWords.begin() + tk_sz);
-
-		return isEmpty;
 	}
+	return isEmpty;
 }
 
-vector<string>& Map::mapExport()
+//Returns vector of Strings by reference
+//implementation requires user to handle FileIO
+vector<string>& Map::exportMap() 
 {
 	emptyCache();
-	//copy contents of exportBuffert to temp for move operation
-	//vector<string> temp {exportBuffer }; //we dont move exportBuffer as it will be used for next files
 	bufferExported = true;
-	
 	return exportBuffer;
+}
+
+//uses FileIO to writeVectorToFile, returns true upon success
+bool Map::exportMap(const string filename)
+{
+	emptyCache();
+
+	//writes contents of buffer to file in temp directory
+	exportMap_FileManager.writeVectorToFile(this->tempDirectory, filename, exportBuffer); 
+
+	//temp flag indicating buffer to be emptied on next call to emptyCache
+	bufferExported = true;
+
+	return true;
 }
 
 string Map::lowerCase(const string& input)

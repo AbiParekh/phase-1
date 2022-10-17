@@ -19,6 +19,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "FileIO.h"
 
 using std::string;
 using std::vector;
@@ -37,11 +38,15 @@ public:
 	//ostream operator for testing ( cout << map::obj )
 	friend ostream& operator<<(ostream& os, const tokenPair& tp);
 
-	//default constructor
+	//default constructor if no Directories nor buffer set
+	//default is to use local path
 	Map();
 
+	//default constructor if no buffer size set
+	Map(const string intermediateDir);
+
 	//constructor with buffersize set
-	Map(int maxBufferSize);
+	Map(const string intermediateDir, int sizeOfBuffer);
 
 	//Destructor
 	~Map(); 
@@ -49,13 +54,22 @@ public:
 	//tokenizes words, accepts a key(filename) and value(single line) from fileIO
 	void map(string filename, string inputLine);
 
+	//tokenizes words, accepts a key(filepath), key(filename) and value(single line) from fileIO
+	void map(string filepath, string filename, string inputLine);
+
 	//accepts key(filename) and value(vector of tokenized strings) sends to output when buffer is full
 	void bufferTokens(string filename, string token);
 
 	//empties buffer
 	bool emptyCache();
 
-	vector<string>& mapExport(); //copy exportBuffer and clear it's contents
+	//copy exportBuffer and return as vector of strings
+	//Buffer is emptied on this call 
+	vector<string>& exportMap(); 
+
+	//Write contents of Buffer to file using FileIO
+	//Buffer is emptied on this call. Returns true on success
+	bool exportMap(string filename);
 
 	// converts a string into lowercase
 	string lowerCase(const string&); 
@@ -66,6 +80,9 @@ private:
 	vector<tokenPair> tokenWords; //private data member tokenPair ("",int)
 	bool bufferExported{ false }; //clears exportBuffer when true
 	int maxBufferSize{};
+	string inputDirectory;
+	string tempDirectory;
+	FileIOManagement exportMap_FileManager;
 
 };
 

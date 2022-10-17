@@ -2,20 +2,20 @@
 #include "Source.h"
 #include <filesystem>
 
-#define BufferSize 10 //number of elements per row
+#define BufferSize 3 //number of elements per row
 namespace fs = std::filesystem;
 
 int main()
 {
 	string path = fs::current_path().parent_path().parent_path().generic_string();
 
-	string inputDirectory{ path + "/demo/inputDir" };
-	string intermediateDirectory { path + "/demo/middleDir" };
-	string outputDirectory{ path +  "/demo/outputDir" };
+	string inputDirectory{ path + "/inputDir" };
+	string middleDirectory { path + "/middleDir" };
+	//string outputDirectory{ path +  "/demo/outputDir" };
 
 
 	//each word trimmed and indexed in a vector
-	Map myBook{BufferSize};
+	Map myBook{middleDirectory, BufferSize};
 	
 	//FileIO Integration Check
 	FileIOManagement fileManager;
@@ -37,7 +37,7 @@ int main()
 			lines.empty();
 		}
 		//Map Function --> Export
-		fileManager.writeVectorToFile(intermediateDirectory, fileList.at(fileCount), myBook.mapExport());
+		fileManager.writeVectorToFile(middleDirectory, fileList.at(fileCount), myBook.exportMap());
 	}
 
 }
