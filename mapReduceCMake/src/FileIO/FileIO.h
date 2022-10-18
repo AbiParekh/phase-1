@@ -8,6 +8,7 @@
 ///		2. Is the program going to have all files are at the top level of the input directory or are we supposed to go lower down?
 ///		3. Does Punctuation include the following: ('.', '!', '?', ',', ':', ';', '-', '[', ']', '{', '}', '(', ')', ''', ' ` ', '"', '...'
 ///		4. How should we handle the following? '@', '#', '$', '%', '^', '&', '*', '_', '+', '=', '\', '<', '>', '/', '~'? Should we Treat them as Chars?
+///     5. Does the output have to be?  (“a”, 1), (“the”, 1), (“is”, 1), (“the”, 1), (“a”, 1)' with all one line. 
 
 /// <summary>
 /// Class provides methods for writing and reading from Files
