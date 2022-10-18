@@ -2,7 +2,7 @@
 #include "Source.h"
 #include <filesystem>
 
-#define BufferSize 1000 //number of elements per row
+#define BufferSize 3000 //number tokenPairs per partitioned file (tempDirectory)
 namespace fs = std::filesystem;
 
 int main()
@@ -30,17 +30,15 @@ int main()
 		{
 			for (size_t fileLine = 0; fileLine < lines.size(); fileLine++)
 			{
-				//std::cout << "File (" << fileList.at(fileCount) << ") Line (" << fileLine << "): " << lines.at(fileLine) << std::endl;
-				//Map Function --> Map
+				//Map Function --> Map and Export
 				myBook.map(fileList.at(fileCount), lines.at(fileLine));
 			}
-			//Map Function --> Export
-			myBook.exportMap(fileList.at(fileCount), 0); //export remaining contents of file and set index to 0
-			lines.empty();
-
-		}
-		
 	
-	}
+			//Map Function --> Flush and Export
+			myBook.flush(fileList.at(fileCount));
 
+			lines.empty();
+		}
+	}
+	return 0;
 }
