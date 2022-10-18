@@ -7,7 +7,7 @@
 ///		1. Is the program only supposed to accept files with a text file (.txt) extension? 
 ///		2. Is the program going to have all files are at the top level of the input directory or are we supposed to go lower down?
 ///		3. Does Punctuation include the following: ('.', '!', '?', ',', ':', ';', '-', '[', ']', '{', '}', '(', ')', ''', ' ` ', '"', '...'
-///		4. How should we handle the following? '@', '#', '$', '%', '^', '&', '*', '-_', '+', '=', '\', '<', '>', '/', '~'? Should we Treat them as Chars?
+///		4. How should we handle the following? '@', '#', '$', '%', '^', '&', '*', '_', '+', '=', '\', '<', '>', '/', '~'? Should we Treat them as Chars?
 
 /// <summary>
 /// Class provides methods for writing and reading from Files
