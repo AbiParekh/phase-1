@@ -1,0 +1,22 @@
+# To-Do
+
+CIS687 Object Oriented Design in C++
+Emmanuell Sevieux - October 13, 2022
+
+Project 1 - MapReduce Team Project 
+
+Map Class: 
+The map class will contain a public method map(), that accepts a key and value.
+The key will be the file nameand the value will be a single line of raw data from
+the file.
+The map() function tokenizes the value into distinct words scanning for alphanumeric
+characters only replacing capitalized characters with lower case. 
+
+DISCLAIMER: Non alphanumeric characters such as punctuation, white space, hyphons ("-") 
+and apostrophes ("'") will be removed. This may modify the meaning of a given token.
+
+The map() function will calls a separate export function that takes a key and value as 
+two parameters. The export function will buffer output in memoryand periodically write 
+the data out to disk. periodicity based on the size of the buffer which can be specified 
+via argument when constructing map(). The intermediate data will be written to user specified
+temporary directory passed as argument when constructing map()
