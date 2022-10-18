@@ -1,11 +1,6 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\mapReduceCMake",
-    "\\mapReduceCMake\\FileIO",
-    "\\phase1MapReduce\\FileIO",
-    "\\phase1MapReduce\\sorter"
+    ""
   ],
-  "SelectedNode": "\\phase1MapReduce",
-  "PreviewInSolutionExplorer": true
+  "PreviewInSolutionExplorer": false
 }
