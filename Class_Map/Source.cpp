@@ -2,7 +2,7 @@
 #include "Source.h"
 #include <filesystem>
 
-#define BufferSize 10 //number of elements per row
+#define BufferSize 1000 //number of elements per row
 namespace fs = std::filesystem;
 
 int main()
@@ -40,8 +40,7 @@ int main()
 
 		}
 		
-		//using exportMap with vector<string> return method
-		//fileManager.writeVectorToFile(middleDirectory, fileList.at(fileCount), myBook.exportMap());
+	
 	}
 
 }

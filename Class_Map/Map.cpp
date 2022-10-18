@@ -13,7 +13,7 @@ using std::endl;
 using std::getline;
 
 Map::Map()
-	:maxBufferSize{ 10 } // defaults sizeOfBuffer
+	:maxBufferSize{ 1000 } // defaults sizeOfBuffer
 {};
 
 
@@ -103,8 +103,8 @@ bool Map::exportMap(const string fileName, int index)
 	//string tempFile = fileName;
 	fileIndex = index; 
 
-	string tempFile = appendFileIndex(fileName, fileIndex++);
-
+	string tempFile = appendFileIndex(fileName, fileIndex);
+	fileIndex++;
 	//writes contents of buffer to file in temp directory
 	exportMap_FileManager.writeVectorToFile(this->tempDirectory, tempFile, exportBuffer); 
 	cout << "Map has exported file: " << this->tempDirectory << '/' << tempFile << endl;
