@@ -7,7 +7,7 @@ namespace fs = std::filesystem;
 
 int main()
 {
-	string path = fs::current_path().parent_path().parent_path().generic_string();
+	string path = fs::current_path().parent_path().parent_path().parent_path().generic_string();
 
 	string inputDirectory{ path + "/inputDir" };
 	string middleDirectory { path + "/middleDir" };
