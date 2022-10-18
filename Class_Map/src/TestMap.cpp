@@ -7,8 +7,8 @@ namespace fs = std::filesystem;
 
 int main()
 {
+	bool success;
 	string path = fs::current_path().parent_path().parent_path().parent_path().generic_string();
-
 	string inputDirectory{ path + "/inputDir" };
 	string middleDirectory { path + "/middleDir" };
 	//string outputDirectory{ path +  "/demo/outputDir" };
@@ -37,7 +37,7 @@ int main()
 			//Map Function --> Flush and Export
 			myBook.flush(fileList.at(fileCount));
 
-			lines.empty();
+			success = lines.empty();
 		}
 	}
 	return 0;
