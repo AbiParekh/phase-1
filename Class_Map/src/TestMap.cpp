@@ -14,7 +14,7 @@ int main()
 	//string outputDirectory{ path +  "/demo/outputDir" };
 
 
-	//each word trimmed and indexed in a vector
+	//each word trimmed and indexed in a vector 
 	Map myBook{middleDirectory, BufferSize};
 	
 	//FileIO Integration Check
