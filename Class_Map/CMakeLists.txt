@@ -7,7 +7,7 @@ cmake_minimum_required (VERSION 3.8)
 project ("phase-1")
 
 # Add source to this project's executable.
-add_executable (Class_Map  "src/Map.cpp" "src/Source.cpp" "src/Source.h" "src/Map.h" "src/FileIO.cpp" "src/FileIO.h")
+add_executable (Class_Map  "src/Map.cpp" "src/TestMap.cpp" "src/TestMap.h" "src/Map.h" "src/FileIO.cpp" "src/FileIO.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Class_Map PROPERTY CXX_STANDARD 20)

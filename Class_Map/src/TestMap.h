@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _Source_h_
-#define _Source_h_
+#ifndef _TestMap_h_
+#define _TestMap_h_
 
 #include "Map.h"
 #include "MapReduceSorter.h"
