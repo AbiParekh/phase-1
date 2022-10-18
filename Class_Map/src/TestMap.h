@@ -3,7 +3,6 @@
 #define _TestMap_h_
 
 #include "Map.h"
-#include "MapReduceSorter.h"
 #include "FileIO.h"
 
 #include <string>
