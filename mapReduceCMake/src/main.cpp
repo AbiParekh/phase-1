@@ -34,6 +34,9 @@ int main(int argc, char* argv[])
 	// Pass in Directories into construction of Map Reducer
 	MapReducer mapReducer(argumentVector.at(1), argumentVector.at(2), argumentVector.at(3));
 	std::string outputFileName;
+	MapSorter mapSorter("temp", "temp2");
+	mapSorter.ParseLineIntoSortedMap("(\"row\", 1), (\"row\", 1), (\"row\", 1), (\"your\", 1), (\"boat\", 1), (\"gently\", 1), (\"down\", 1), (\"the\", 1), (\"stream\", 1)");
+	/*
 	if (mapReducer.reduce(outputFileName))
 	{
 		std::cout << "Successfully Reduced Input Directory into the file: "<< outputFileName << "!" << std::endl;
@@ -42,7 +45,7 @@ int main(int argc, char* argv[])
 	{
 		std::cout << "Failed to Reduce Input Directory!" << std::endl;
 	}
-
+	*/
 	return 0;
 }
 

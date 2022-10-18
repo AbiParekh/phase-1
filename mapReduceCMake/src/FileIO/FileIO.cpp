@@ -18,8 +18,9 @@ bool FileIOManagement::writeVectorToFile(const std::string filePath, const std::
 		}
 		for (size_t itemNumber = 0; itemNumber < items.size(); itemNumber++)
 		{
+			if (itemNumber != 0) std::cout << ", "; // IF NOT THE 1st Item Add a Common
 			std::string tempHoldingVarForItem = items.at(itemNumber);
-			outFile << tempHoldingVarForItem << ", ";
+			outFile << tempHoldingVarForItem;
 		}
 
 		outFile.close();

@@ -31,6 +31,10 @@ public:
 		/// <returns></returns>
 		bool addFileContentsToSorter(const std::string& folderPath, const std::string& fileName);
 
+		bool ParseLineIntoSortedMap(const std::string& line);
+
+		void MapSorter::AddPhraseToMap(const std::string& formattedWord, const std::string& startString, const std::string& endString);
+
 private:
 
 		/// <summary>
@@ -40,6 +44,12 @@ private:
 		/// <param name="usageCount"></param>
 		/// <returns></returns>
 		std::string formatOutput(const std::string& word, const uint32_t& usageCount);
+
+
+		bool AnotherWordRemaining(const std::string& phrase, const std::string& subString);
+
+		bool MapSorter::IsolateWord(const std::string& formattedWord, const std::string& startString, const std::string& endString, std::string& isloatedWord);
+
 
 		/// <summary>
 		/// Collection of Data for Usage. The Key is a String while the Value is the usage count 
