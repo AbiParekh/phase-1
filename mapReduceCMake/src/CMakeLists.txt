@@ -21,9 +21,13 @@ set(Sorter_files
 ${TOP_LEVEL_ROOT_DIR}/src/Sorter/MapReduceSorter.h
 ${TOP_LEVEL_ROOT_DIR}/src/Sorter/MapReduceSorter.cpp)
 
-set(Reducer_files
-${TOP_LEVEL_ROOT_DIR}/src/ReduceClass/Reduce.h
-${TOP_LEVEL_ROOT_DIR}/src/ReduceClass/Reduce.cpp)
+#set(Reducer_files
+#${TOP_LEVEL_ROOT_DIR}/src/ReduceClass/Reduce.h
+#${TOP_LEVEL_ROOT_DIR}/src/ReduceClass/Reduce.cpp)
+
+set(Map_files
+${TOP_LEVEL_ROOT_DIR}/src/Map/Map.h
+${TOP_LEVEL_ROOT_DIR}/src/Map/Map.cpp)
 
 # Create Top Level Application File List
 set(${PROJECT_NAME}_baseFiles
@@ -32,19 +36,21 @@ ${TOP_LEVEL_ROOT_DIR}/src/MapReducer.h
 ${TOP_LEVEL_ROOT_DIR}/src/main.cpp)
 
 # Add source to this project's executable.
+
 add_executable (${PROJECT_NAME} 
 ${${PROJECT_NAME}_baseFiles}
 ${FileIO_files}
-#${Map_files}
 ${Sorter_files}
-${Reducer_files}
+#${Reducer_files}
+${Map_files}
 )
 
 target_include_directories(${PROJECT_NAME}
 PRIVATE
 ${TOP_LEVEL_ROOT_DIR}/src/FileIO
 ${TOP_LEVEL_ROOT_DIR}/src/Sorter
-${TOP_LEVEL_ROOT_DIR}/src/ReduceClass
+#${TOP_LEVEL_ROOT_DIR}/src/ReduceClass
+${TOP_LEVEL_ROOT_DIR}/src/Map
 )
 
 target_compile_definitions(${PROJECT_NAME}
