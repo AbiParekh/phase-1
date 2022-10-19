@@ -80,10 +80,12 @@ bool MapReducer::doReduce(std::string& outputFileName)
 					//Map Function --> Export
 				}
 			}
-			fileManager.writeVectorToFile(intermediateDirectory_, "" + fileList.at(fileCount), lines);
 		}
 
 		fileList.clear();
+
+
+		// SORT WRITES OUTPUT FILE 
 		if (!fileManager.getListOfTextFilesBasedOnStart(intermediateDirectory_, LEADING_STRING_MAPPED_FILES, fileList))
 		{
 			std::cout << "Unable to get List of Files created by the MAPPED Directory" << std::endl;
@@ -97,7 +99,7 @@ bool MapReducer::doReduce(std::string& outputFileName)
 				std::cout << "Unable to add File: " << intermediateDirectory_ << "\\" << fileList.at(fileCount) << "To Sorted List" << std::endl;
 			}
 		}
-
+	
 		std::string sortedFileName = ""; //TODO
 		if (!mapSorter.writeSortedMaptoFile(intermediateDirectory_, sortedFileName))
 		{
@@ -105,9 +107,16 @@ bool MapReducer::doReduce(std::string& outputFileName)
 			return false;
 		}
 
+		// SORT WRITES OUTPUT FILE 
+
 
 		// Call Reduce Function
-	}
+			// Read from Sorted File
+			// Reduce Sorted File Contents 
+			// Write Output of Sorted File
+			// Write Successful File
+
+	}	
 	else
 	{
 

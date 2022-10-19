@@ -4,7 +4,17 @@
 
 std::string MapSorter::formatOutput(const std::string& word, const uint32_t& usageCount)
 {
-	return std::string();
+	// Setup the Initial Word and Quotations 
+	std::string formatedOutput = "(\"" + word + "\"";
+	for (size_t counter = 0; counter < usageCount; counter++)
+	{
+		// Add a 1 for each usage
+		formatedOutput.append(", 1");
+	}
+	///End the with the final parenthesis 
+	formatedOutput.append(")");
+
+	return formatedOutput;
 }
 
 MapSorter::MapSorter(std::string postMapKey, std::string postSortKey):
@@ -15,7 +25,20 @@ MapSorter::MapSorter(std::string postMapKey, std::string postSortKey):
 
 bool MapSorter::writeSortedMaptoFile(std::string filePath, std::string fileName)
 {
-	return false;
+	std::vector<std::string> outputVector;
+	for (std::map<std::string, uint32_t>::iterator mapIterator = sortedMap.begin(); mapIterator != sortedMap.end();	++mapIterator)
+	{
+		outputVector.push_back(formatOutput(mapIterator->first, mapIterator->second));
+	}
+
+	if (!fileManager.writeVectorToFile(filePath, fileName, outputVector))
+	{
+		std::cout << "Unable to Write Sorted Map File " << std::endl;
+		return false;
+	}
+
+	return true;
+	
 }
 
 bool MapSorter::addFileContentsToSorter(const std::string& folderPath, const std::string& fileName)
@@ -84,6 +107,16 @@ void MapSorter::AddPhraseToMap(const std::string& phrase, const std::string& sta
 	std::string isolateWord;
 	if (IsolateWord(phrase, startString, endString, isolateWord))
 	{
-		std::cout << "isolateWord: " << isolateWord << std::endl; //ADD TO MAP
+		std::map<std::string, uint32_t>::iterator mapIterator = sortedMap.find(isolateWord);
+		if (mapIterator == sortedMap.end())
+		{
+			// The word was not found in the Map therefore add it 
+			sortedMap.insert(std::pair<std::string, uint32_t>(isolateWord, 1));
+		}
+		else
+		{
+			// The Word was found in the map increment it
+			mapIterator->second = mapIterator->second + 1;
+		}
 	}
 }
