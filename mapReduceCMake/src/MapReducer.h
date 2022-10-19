@@ -6,6 +6,7 @@
 #include <string>
 #include "Sorter/MapReduceSorter.h"
 #include "FileIO/fileIO.h"
+#include "Map/Map.h"
 
 class MapReducer
 {

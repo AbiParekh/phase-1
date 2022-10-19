@@ -25,7 +25,7 @@ Map::Map(const string intermediate)
 	: tempDirectory { intermediate }, maxBufferSize {10} 
 {};
 
-Map::Map(const string intermediate, int sizeOfBuffer)
+Map::Map(const string intermediate, size_t sizeOfBuffer)
 	: tempDirectory{ intermediate }, maxBufferSize{ sizeOfBuffer }
 {};
 

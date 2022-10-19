@@ -1,0 +1,3 @@
+HI, I WAS ALL CAPS!!!
+This is a Simple str!ng. With random@ punctuation thr0ughout 12345:6789!
+comma,ellipse...space tab\t hyphon-underscore_!!\nnewline!apostrophy's

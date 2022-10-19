@@ -38,7 +38,7 @@ public:
 	Map(const string intermediateDir);
 
 	//constructor with buffersize set
-	Map(const string intermediateDir, int sizeOfBuffer);
+	Map(const string intermediateDir, size_t sizeOfBuffer);
 
 	//Destructor
 	~Map(); 
@@ -75,7 +75,7 @@ private: /** PRIVATE MEMBER FUNCTIONS **/
 private: /** PRIVATE DATA MEMBERS **/
 
 	//size of buffer, exports to tempDirectory if full
-	int maxBufferSize{};
+	size_t maxBufferSize{};
 
 	//formatted as string of tokens ("token1",1),("token2",2),... 
 	vector<string> exportBuffer; 
