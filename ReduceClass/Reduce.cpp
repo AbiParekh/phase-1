@@ -85,6 +85,6 @@ void exportSuccess(const string) {
 
 ostream& operator<<(ostream& output, const vec& v), int>>
 {
-    output << "(" << v.first << ":" << tp.second << ")"; //formatting the output results
+    output << "(" << v.first << ":" << v.second << ")"; //formatting the output results
     return output;
 }
