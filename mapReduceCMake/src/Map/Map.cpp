@@ -29,10 +29,10 @@ Map::Map(const string intermediate, size_t sizeOfBuffer)
 	: tempDirectory{ intermediate }, maxBufferSize{ sizeOfBuffer }
 {};
 
-void Map::map(const string filename, const string strCAPS)
+void Map::createMap(const string filename, const string strCAPS)
 {
 	bool isExported{ false };
-	string parsedWord, str{ lowerCase(strCAPS) };
+	string parsedWord, str{ lowerCaseMap(strCAPS) };
 	
 	for (int tokenStart = 0, tokenEnd = 0; tokenEnd <= str.length(); tokenEnd++) //iterate through each char, check if end of work
 	{
@@ -52,7 +52,7 @@ void Map::map(const string filename, const string strCAPS)
 	}
 };
 
-bool Map::flush(const string fileName)
+bool Map::flushMap(const string fileName)
 {
 	bool isFlushed = exportMap(fileName, fileIndex);
 	cout << "Mapped " << fileIndex << " Partition(s) of " << fileName << " to tempDirectory: " << this->tempDirectory << endl;
@@ -78,11 +78,11 @@ bool Map::exportMap(const string fileName, int index)
 
 	//Prevents duplicate write to file if current buffer was already exported
 	if (isExported) {
-		string tempFile = appendFileIndex(fileName, index);
+		string tempFile = addFileSuffix(fileName, index);
 		fileIndex = index + 1;
 
 		//writes contents of buffer to file in temp directory
-		exportMap_FileManager.writeVectorToFile(this->tempDirectory, tempFile, exportBuffer);
+		mapFileManager.writeVectorToFile(this->tempDirectory, tempFile, exportBuffer);
 		//cout << "Map has exported file: " << this->tempDirectory << '/' << tempFile << endl;
 	}
 
@@ -114,7 +114,7 @@ bool Map::emptyCache()
 	return isEmptied; //False if no cache emptied
 }
 
-string Map::appendFileIndex(const string filename, int index)
+string Map::addFileSuffix(const string filename, int index)
 {
 	string tempFile = filename;
 	size_t lastdot = filename.find_last_of("."); //finds extension if any in file
@@ -128,7 +128,7 @@ string Map::appendFileIndex(const string filename, int index)
 	}
 }
 
-string Map::lowerCase(const string& input)
+string Map::lowerCaseMap(const string& input)
 {
 	string output;
 	for (char c : input)

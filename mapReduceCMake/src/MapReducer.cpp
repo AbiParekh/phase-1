@@ -64,14 +64,11 @@ bool MapReducer::doReduce(std::string& outputFileName)
 {
 	if (validateDirectories())
 	{
-		FileIOManagement fileManager;
 		std::vector<std::string> fileList;
 		fileManager.getListOfTextFiles(inputDirectory_, fileList);
 
 		//initialize Map Object
 		bool successMap;
-		size_t BufferSize{ 3000 };
-		Map myBook{ intermediateDirectory_, BufferSize };
 
 		// Input Processing and initial Map Call
 		for (size_t fileCount = 0; fileCount < fileList.size(); fileCount++)
@@ -82,11 +79,11 @@ bool MapReducer::doReduce(std::string& outputFileName)
 				for (size_t fileLine = 0; fileLine < lines.size(); fileLine++)
 				{
 					//Map Function --> Map
-					 myBook.map(fileList.at(fileCount), lines.at(fileLine));
+					 mapBook.createMap(fileList.at(fileCount), lines.at(fileLine));
 				}
 
 				//Map Function --> Export
-				myBook.flush(fileList.at(fileCount));
+				mapBook.flushMap(fileList.at(fileCount));
 				lines.resize(0);
 			}
 		}

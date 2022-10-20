@@ -44,14 +44,13 @@ public:
 	~Map(); 
 
 	//tokenizes words, accepts a key(filename) and value(single line) from fileIO
-	void map(string filename, string inputLine);
+	void createMap(string filename, string inputLine);
 
 	//tokenizes words, accepts a key(filepath), key(filename) and value(single line) from fileIO
-	void map(string filepath, string filename, string inputLine);
+	void createMap(const string filepath, const string filename, const string inputLine);
 
 	//clears Maps contents, prepares to read in new file
-	bool flush(const string filename);
-
+	bool flushMap(const string filename);
 
 private: /** PRIVATE MEMBER FUNCTIONS **/
 
@@ -65,12 +64,11 @@ private: /** PRIVATE MEMBER FUNCTIONS **/
 	bool exportMap(const string filename, int index);
 
 	// converts a string into lowercase
-	string lowerCase(const string&); 
+	string lowerCaseMap(const string&); 
 
 	// adds suffix to end of intermediate file
-	string appendFileIndex(const string filename, int index);
+	string addFileSuffix(const string filename, int index);
 
-	
 
 private: /** PRIVATE DATA MEMBERS **/
 
@@ -87,7 +85,7 @@ private: /** PRIVATE DATA MEMBERS **/
 	string tempDirectory;
 
 	//handles FileIO implementation
-	FileIOManagement exportMap_FileManager;
+	FileIOManagement mapFileManager;
 
 	//Counter to index large files broken into smaller tempFiles
 	int fileIndex{ 0 }; 
