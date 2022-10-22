@@ -1,3 +1,0 @@
-Welcome to Hadoop Class
-Hadoop is good
-Hadoop is bad
