@@ -6,6 +6,9 @@ cmake_minimum_required (VERSION 3.8)
 set(CXX_STANDARD 17)
 
 project ("mapReducer")
+add_subdirectory(Google_tests)
+include_directories(Google_tests/lib/include Google_tests/lib)
+
 
 # Set Parameters
 
@@ -60,4 +63,4 @@ PRIVATE
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
 #TODO ADD TEST
-# add_subdirectroy(FileIO/test)
+#add_subdirectroy(FileIO/test)

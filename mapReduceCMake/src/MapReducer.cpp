@@ -4,7 +4,7 @@
 #include "MapReducer.h"
 #include "FileIO.h"
 #include <iostream>
-
+#include "gtest/gtest.h"
 // PUBLIC METHODS
 
 MapReducer::MapReducer(std::string inputDir, std::string outputDir, std::string middleDir):
