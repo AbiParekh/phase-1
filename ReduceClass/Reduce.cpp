@@ -43,7 +43,7 @@ Reduce::Reduce(const string tMemory, size_t bufferSize)
     :intermediateDirectory{tMemory}, bufferLimit{bufferSize}
 {};
 
-Reduce::Reduce(const string key)
+//Reduce::Reduce(const string key)
 
 
 Reduce::~Reduce()
@@ -71,7 +71,9 @@ bool Reduce::importData(const string& folderPath, const string& fileName)
 };
 
 
-void Reduce::reduce(const string key, int Iter start_val, int Iter end_val, reduced_val) {
+void Reduce::reduce(const std::string& key, int& Iter start_val, int& Iter end_val, reduced_val) {
+    
+    bool executionComplete {false};
     std::vector<std::pair<string, int>> vec; //input data ("hello", [1,1,1], "hi", [1,1],...)
     std::vector<std::pair<string, int>> reduced_vector; //currently empty, output vector
 
@@ -84,36 +86,53 @@ void Reduce::reduce(const string key, int Iter start_val, int Iter end_val, redu
 
     reduced_vector.push_back(reduced_val);
 
-}
+    //return executionComplete; //false defines that task has failed
 
+}
 
 bool Reduce::emptyBuffer(){
     //clear the cache 
 };
 
 
-bool Reduce::exportReduce(const string key, int val) 
+/*export the reduced values and its key from a vector to a file,
+send it to FileIOManagement*/
+
+bool Reduce::exportReduce(const string filename, int val) 
     
 {
-    //writes out all data to an export file
+    bool executionComplete;
+    if (executionComplete = true) {
+        
+        bool vectorSent {false};
+        //writes out all data to an export file
 
-    reduced_vector; //output vector
+        reduced_vector; //output vector
 
-    ofstream out_file("final_output.txt"); //create an output file named final_output.txt
-    ostream_iterator<string, int> out_iterator(out_file, "\n");
-    copy(key, val, out_iterator);
+        ofstream out_file("final_output.txt"); //create an output file named final_output.txt
+        ostream_iterator<string, int> out_iterator(out_file, "\n");
+        copy(key, val, out_iterator);
 
-    //copy(reduced_vector.begin(), reduced_vector.end(), out_iterator);
-    //cout << reduced_vector[0] << endl;
+        return vectorSent; //false define vector was not exported
+
+        //copy(reduced_vector.begin(), reduced_vector.end(), out_iterator);
+        //cout << reduced_vector[0] << endl;
+    }
+    
 }
 
 
 
-bool Reduce::exportSuccess(const string) {
+
+/*export a success file once the reduce operation has successfully completed 
+*/
+bool Reduce::exportSuccess(const string filename) {
     //write success and export it to an output file
     //after the entire input vector has been reduced and outputed.
 
-    if () { //fix this
+    bool vectorSent;
+
+    if (vectorSent = true) { //reduce function finishes its execuation loop, then go ahead with this statement
         ofstream success_file;
         success_file.open ("successs.txt");
         success_file <<"SUCCESS!\n";
@@ -121,7 +140,7 @@ bool Reduce::exportSuccess(const string) {
     }
     
     
-}        
+}       
 
 ostream& operator<<(ostream& output, const vec& v)
 {
