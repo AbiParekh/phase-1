@@ -53,7 +53,7 @@ class Reduce{
 
             bool exportReduce(const string key, int val); //write to file and export
 
-            bool exportSuccess(const string); //write success to file and export
+            bool exportSuccess(const string filename); //write success to file and export
 
 
     private:
