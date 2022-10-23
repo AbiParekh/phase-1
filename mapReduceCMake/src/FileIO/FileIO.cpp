@@ -3,10 +3,12 @@
 #include <fstream>
 #include <cstdint>
 #include <filesystem>
+#include <cstdio>
 
 namespace fs = std::filesystem;
 bool FileIOManagement::writeVectorToFile(const std::string filePath, const std::string fileName, const std::vector<std::string>& items)
 {
+	bool result = true;
 	if (validDirectory(filePath))
 	{
 		std::string fileNameAndPath = filePath + "\\" + fileName;
@@ -14,23 +16,31 @@ bool FileIOManagement::writeVectorToFile(const std::string filePath, const std::
 		outFile.open(fileNameAndPath);
 		if (!outFile || !outFile.good())
 		{
-			std::cout << "Unable to create file (" << fileNameAndPath << ") in Write Vector to File Request" << std::endl;
+			std::cout << "Error: Unable to create file (" << fileNameAndPath << ") in Write Vector to File Request" << std::endl;
+			result = false;
+			
 		}
-		for (size_t itemNumber = 0; itemNumber < items.size(); itemNumber++)
+		else
 		{
-			if (itemNumber != 0) std::cout << ", "; // IF NOT THE 1st Item Add a Common
-			std::string tempHoldingVarForItem = items.at(itemNumber);
-			outFile << tempHoldingVarForItem;
-		}
+			for (size_t itemNumber = 0; itemNumber < items.size(); itemNumber++)
+			{
+				std::string tempHoldingVarForItem = items.at(itemNumber);
+//				outFile << tempHoldingVarForItem << "\n";
+				outFile << tempHoldingVarForItem << std::endl;
 
-		outFile.close();
+			}
+
+			outFile.close();
+		}
+		
 	}
 	else
 	{
-		std::cout << "Invalid Folder Path ("<< filePath << ") within the Write Vector To File Request" << std::endl;
-		return false;
+		std::cout << "Error:  Invalid Folder Path ("<< filePath << ") within the Write Vector To File Request" << std::endl;
+		result = false;
 	}
-		return true;
+		
+	return result;
 }
 
 
@@ -39,7 +49,7 @@ bool FileIOManagement::readFileIntoVector(const std::string filePath, const std:
 {
 	if (!canAccessFile(filePath, fileName))
 	{
-		std::cout << "Invalid File (" << fileName << ") within the read File Into Vector Request" << std::endl;
+		std::cout << "Error: Invalid File (" << fileName << ") within the read File Into Vector Request" << std::endl;
 		return false;
 	}
 
@@ -53,13 +63,6 @@ bool FileIOManagement::readFileIntoVector(const std::string filePath, const std:
 		items.push_back(line);
 	}
 
-#ifdef PRINT_DEBUG
-	std::cout << " THE FILE " << filePath << "\\" << fileName << " IS AS FOLLOWS:" << std::endl;
-	for (size_t line = 0; line < items.size(); line++)
-	{
-		std::cout << "Line " << line << ": " << items.at(line) << std::endl;
-	}
-#endif
 	return true;
 }
 
@@ -84,12 +87,12 @@ bool FileIOManagement::validDirectory(const std::string& folderPath)
 	if (!std::filesystem::exists(sandbox))
 	{
 		std::cout << "ERROR: The Folder Path: " << folderPath << " does not exist!" << std::endl;
-		std::cout << "Current Working Directory is " << current_path << std::endl;
+		std::cout << "INFO: Current Working Directory is " << current_path << std::endl;
 		return false;
 	}
 	else if (!std::filesystem::is_directory(sandbox))
 	{
-		std::cout << folderPath << " is not a directory!" << std::endl;
+		std::cout << "Error: Provided Path (" << folderPath << ") is not a directory!" << std::endl;
 		return false;
 	}
 
@@ -98,29 +101,62 @@ bool FileIOManagement::validDirectory(const std::string& folderPath)
 
 
 
+bool FileIOManagement::createDirectory(const std::string& folderPath, const std::string& newFolderName)
+{
+	bool result = true;
+	if (validDirectory(folderPath))
+	{
+		std::string newFolderPathFull = folderPath + "\\" + newFolderName;
+
+		// If the folder exist delete the contents 
+		if (validDirectory(newFolderPathFull))
+		{
+			std::cout << "Warning: Already Exist, deleting directory and contents " << std::endl;
+			fs::remove_all("newFolderPathFull"); // Deletes one or more files recursively.
+		}
+		
+		// If the Folder Does not exist create it 
+		fs::create_directories(newFolderPathFull);
+
+		if (!validDirectory(newFolderPathFull))
+		{
+			std::cout << "Error: Unable to Create the Directory (" << newFolderPathFull << ")" << std::endl;
+		}
+	}
+	else
+	{
+		result = false;
+	}
+	return result;
+}
+
 bool FileIOManagement::getListOfTextFiles(const std::string& inputFolder, std::vector<std::string>& fileList)
 {
+	bool result = true;
 	if (validDirectory(inputFolder))
 	{
 		for (const auto& entry : fs::directory_iterator(inputFolder))
 		{
-#ifdef PRINT_DEBUG
-			std::cout << "entry.path() = " << entry.path() << ", entry.path().filename(): " << entry.path().filename() << ", extension: " << entry.path().extension() << std::endl;
-#endif
 			if ((entry.path().has_extension()) && (entry.path().extension().string().compare(".txt") == 0))
 			{				
 				fileList.push_back(entry.path().filename().string());
 			}
 			else
 			{
-				std::cout << "Ignoring the file " << entry.path().filename() << " as it is not a text file " << std::endl;
+				std::cout << "Warning: Ignoring the file " << entry.path().filename() << " as it is not a text file " << std::endl;
 			}	
 		}
 			
 	}
-	return true;
+	else
+	{
+		result = false;
+	}
+	return result;
 }
 
+
+// OBE DO NOT UNIT TEST 
 
 bool FileIOManagement::getListOfTextFilesBasedOnStart(const std::string& inputFolder, const std::string& startingSubString, std::vector<std::string>& fileList)
 {
@@ -128,9 +164,6 @@ bool FileIOManagement::getListOfTextFilesBasedOnStart(const std::string& inputFo
 	{
 		for (const auto& entry : fs::directory_iterator(inputFolder))
 		{
-#ifdef PRINT_DEBUG
-			std::cout << "entry.path() = " << entry.path() << ", entry.path().filename(): " << entry.path().filename() << ", extension: " << entry.path().extension() << std::endl;
-#endif
 			if ((entry.path().has_extension()) && (entry.path().extension().string().compare(".txt") == 0))
 			{
 				std::string tempFileName = entry.path().filename().string();
@@ -148,7 +181,7 @@ bool FileIOManagement::getListOfTextFilesBasedOnStart(const std::string& inputFo
 			}
 			else
 			{
-				std::cout << "Ignoring the file " << entry.path().filename() << " as it is not a text file " << std::endl;
+				std::cout << "Warning: Ignoring the file " << entry.path().filename() << " as it is not a text file " << std::endl;
 			}
 		}
 

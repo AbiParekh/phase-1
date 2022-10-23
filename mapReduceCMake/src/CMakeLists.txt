@@ -59,5 +59,5 @@ PRIVATE
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
-#TODO ADD TEST
-# add_subdirectroy(FileIO/test)
+#Test Bins
+add_subdirectory(${TOP_LEVEL_ROOT_DIR}/src/FileIO)

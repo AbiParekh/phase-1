@@ -18,8 +18,8 @@ std::string MapSorter::formatOutput(const std::string& word, const uint32_t& usa
 }
 
 MapSorter::MapSorter(std::string postMapKey, std::string postSortKey):
-	LEADING_STRING_MAPPED_FILES(postMapKey),
-	LEADING_STRING_SORTED_FILES(postSortKey)
+	MapOuputDirectoryName(postMapKey),
+	SortOuputDirectoryName(postSortKey)
 {
 }
 
@@ -33,7 +33,7 @@ bool MapSorter::writeSortedMaptoFile(std::string filePath, std::string fileName)
 
 	if (!fileManager.writeVectorToFile(filePath, fileName, outputVector))
 	{
-		std::cout << "Unable to Write Sorted Map File " << std::endl;
+		std::cout << "Error: Unable to Write Sorted Map File " << std::endl;
 		return false;
 	}
 
@@ -57,7 +57,7 @@ bool MapSorter::addFileContentsToSorter(const std::string& folderPath, const std
 
 bool MapSorter::AnotherWordRemaining(const std::string& phrase, const std::string& subString)
 {
-	std::cout << "Phrase: " << phrase << ", and substring: " << subString << std::endl;
+
 	if (phrase.find(subString) == std::string::npos)return false;
 	else return true;
 }
@@ -69,7 +69,7 @@ bool MapSorter::ParseLineIntoSortedMap(const std::string& line)
 	std::string DELIMITATOR_SUBSTRING = "), ";
 	std::string FINAL_DELIMITATOR_SUBSTRING = ")";
 	std::string WORD_WRAP = "\"";
-	std::cout << "ParseLineIntoSortedMap!" << std::endl;
+
 	// While there are still more words pull them Apart 
 	while (AnotherWordRemaining(phrase, DELIMITATOR_SUBSTRING))
 	{
@@ -98,11 +98,11 @@ bool MapSorter::IsolateWord(const std::string& formattedWord, const std::string&
 	size_t secondPosition = formattedWord.find(endString, firstPosition+1);
 	if ((firstPosition == std::string::npos) || (secondPosition == std::string::npos)) return false;
 	isloatedWord = formattedWord.substr(firstPosition+1, secondPosition-(firstPosition + 1));
-	std::cout << "1st " << startString << "is at " << firstPosition << " and 2nd " << endString << " is at " << secondPosition << ", ISOLATED WORD = " << isloatedWord << std::endl;
+
 	return true;
 }
 
-void MapSorter::AddPhraseToMap(const std::string& phrase, const std::string& startString, const std::string& endString)
+bool MapSorter::AddPhraseToMap(const std::string& phrase, const std::string& startString, const std::string& endString)
 {
 	std::string isolateWord;
 	if (IsolateWord(phrase, startString, endString, isolateWord))
@@ -119,4 +119,9 @@ void MapSorter::AddPhraseToMap(const std::string& phrase, const std::string& sta
 			mapIterator->second = mapIterator->second + 1;
 		}
 	}
+	else
+	{
+		return false;
+	}
+	return true;
 }

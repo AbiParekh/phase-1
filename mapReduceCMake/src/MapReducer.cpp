@@ -62,13 +62,14 @@ bool MapReducer::validateDirectories()
 
 bool MapReducer::doReduce(std::string& outputFileName)
 {
+	bool successMap = true;
 	if (validateDirectories())
 	{
 		std::vector<std::string> fileList;
 		fileManager.getListOfTextFiles(inputDirectory_, fileList);
 
 		//initialize Map Object
-		bool successMap;
+
 
 		// Input Processing and initial Map Call
 		for (size_t fileCount = 0; fileCount < fileList.size(); fileCount++)
@@ -125,6 +126,8 @@ bool MapReducer::doReduce(std::string& outputFileName)
 	}	
 	else
 	{
+		successMap = false;
 
 	}
+	return successMap;
 }

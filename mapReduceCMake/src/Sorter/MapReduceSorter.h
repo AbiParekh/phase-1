@@ -8,7 +8,7 @@ class MapSorter
 {
 public:
 		//Constructor
-		MapSorter(std::string postMapKey, std::string postSortKey);
+		MapSorter(std::string mapName, std::string SortName);
 
 
 		//Destructor
@@ -33,9 +33,9 @@ public:
 
 		bool ParseLineIntoSortedMap(const std::string& line);
 
-		void MapSorter::AddPhraseToMap(const std::string& formattedWord, const std::string& startString, const std::string& endString);
+		bool AddPhraseToMap(const std::string& formattedWord, const std::string& startString, const std::string& endString);
 
-private:
+protected:
 
 		/// <summary>
 		/// S-OConnor TODO Fill Out Comments
@@ -46,10 +46,10 @@ private:
 		std::string formatOutput(const std::string& word, const uint32_t& usageCount);
 
 
+
 		bool AnotherWordRemaining(const std::string& phrase, const std::string& subString);
 
-		bool MapSorter::IsolateWord(const std::string& formattedWord, const std::string& startString, const std::string& endString, std::string& isloatedWord);
-
+		bool IsolateWord(const std::string& formattedWord, const std::string& startString, const std::string& endString, std::string& isloatedWord);
 
 		/// <summary>
 		/// Collection of Data for Usage. The Key is a String while the Value is the usage count 
@@ -61,8 +61,9 @@ private:
 		/// </summary>
 		FileIOManagement fileManager;
 
-		const std::string LEADING_STRING_MAPPED_FILES;
 
-		const std::string LEADING_STRING_SORTED_FILES;
+		const std::string MapOuputDirectoryName;
+
+		const std::string SortOuputDirectoryName;
 
 };
