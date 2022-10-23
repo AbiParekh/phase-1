@@ -47,6 +47,7 @@ ${Map_files}
 
 target_include_directories(${PROJECT_NAME}
 PRIVATE
+${TOP_LEVEL_ROOT_DIR}/src/Google_tests/lib/include
 ${TOP_LEVEL_ROOT_DIR}/src/FileIO
 ${TOP_LEVEL_ROOT_DIR}/src/Sorter
 #${TOP_LEVEL_ROOT_DIR}/src/ReduceClass

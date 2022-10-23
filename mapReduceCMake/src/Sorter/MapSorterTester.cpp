@@ -40,7 +40,8 @@ public:
 
 		if (expectedSortedMap.size() != sortedMap.size())
 		{
-
+			std::cout << "Output Map is Not The Expected Size"
+			result = false;
 		}
 		std::map<std::string, uint32_t>::iterator mapit = expectedSortedMap.begin();
 

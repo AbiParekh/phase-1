@@ -3,9 +3,10 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
+project ("mapReduceCMake")
+
 set(CXX_STANDARD 17)
 
-project ("mapReduceCMake")
 set(TOP_LEVEL_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
 #TODO ADD TEST
