@@ -105,7 +105,7 @@ bool Map::emptyCache()
 
 		for (int i = 0; i < tk_sz; i++)
 		{
-			if (i > 0) exportBuffer[index] += ",";
+			if (i > 0) exportBuffer[index] += "\n";
 			exportBuffer[index] += "(\"" + tokenWords[i].first + "\"," + std::to_string(tokenWords[i].second) + ")";
 		}
 
