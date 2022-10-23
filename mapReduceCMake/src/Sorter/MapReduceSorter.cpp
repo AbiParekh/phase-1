@@ -66,7 +66,7 @@ bool MapSorter::ParseLineIntoSortedMap(const std::string& line)
 {
 	// Copy off the Line so it can be sliced a part
 	std::string phrase = line;
-	std::string DELIMITATOR_SUBSTRING = "), ";
+	std::string DELIMITATOR_SUBSTRING = "),";
 	std::string FINAL_DELIMITATOR_SUBSTRING = ")";
 	std::string WORD_WRAP = "\"";
 
@@ -76,15 +76,15 @@ bool MapSorter::ParseLineIntoSortedMap(const std::string& line)
 		static int count = 0;
 
 		size_t length = phrase.find(DELIMITATOR_SUBSTRING);
-		std::string subString = phrase.substr(0, length +3);
-		phrase = phrase.substr(length + 3);
+		std::string subString = phrase.substr(0, length +2);
+		phrase = phrase.substr(length + 2);
 		AddPhraseToMap(phrase, WORD_WRAP, WORD_WRAP);
 	}
 
 	if (AnotherWordRemaining(phrase, FINAL_DELIMITATOR_SUBSTRING))
 	{
 		size_t length = phrase.find(DELIMITATOR_SUBSTRING);
-		std::string subString = phrase.substr(0, length + 3);
+		std::string subString = phrase.substr(0, length + 2);
 		phrase = phrase.substr(0, length);
 		AddPhraseToMap(phrase, WORD_WRAP, WORD_WRAP);
 	}
@@ -124,4 +124,48 @@ bool MapSorter::AddPhraseToMap(const std::string& phrase, const std::string& sta
 		return false;
 	}
 	return true;
+}
+
+
+bool MapSorter::sortMappedFiles(std::string outputMapDirectory, std::string outpuSortDirectory)
+{
+	return doSortMappedFiles(outputMapDirectory, outpuSortDirectory);
+}
+
+bool MapSorter::doSortMappedFiles(std::string outputMapDirectory, std::string outpuSortDirectory)
+{
+	bool results = true;
+	std::vector<std::string> fileList;
+	if (!fileManager.getListOfTextFiles(outputMapDirectory, fileList))
+	{
+		std::cout << "Error: Unable to get List of Files created by the Map Function" << std::endl;
+		results =  false;
+	}
+	else
+	{
+		// Call Sort Function
+		for (size_t fileCount = 0; fileCount < fileList.size(); fileCount++)
+		{
+			if (!addFileContentsToSorter(outputMapDirectory, fileList.at(fileCount)))
+			{
+				std::cout << "Error: Unable to add File: " << outputMapDirectory << "\\" << fileList.at(fileCount) << "To Sorted List" << std::endl;
+			}
+		}
+
+		std::string sortedFileName = "SortedFile.txt";
+		if (!writeSortedMaptoFile(outpuSortDirectory, sortedFileName))
+		{
+			std::cout << "Error: Unable to Create Sorted Map File " << std::endl;
+			results = false;
+		}
+
+	}
+	
+	return results;
+
+}
+
+void MapSorter::getSortedMap(std::map<std::string, uint32_t>& returnMap)
+{
+	returnMap = sortedMap;
 }

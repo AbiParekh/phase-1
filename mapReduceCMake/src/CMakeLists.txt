@@ -62,3 +62,4 @@ target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 
 #Test Bins
 add_subdirectory(${TOP_LEVEL_ROOT_DIR}/src/FileIO)
+add_subdirectory(${TOP_LEVEL_ROOT_DIR}/src/Sorter)

@@ -243,7 +243,6 @@ bool Test_createDirectory()
 
 }
 
-
 bool Test_writeVectorToFile()
 {
 	// Test Parameters	

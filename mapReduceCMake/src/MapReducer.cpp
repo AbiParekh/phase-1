@@ -10,7 +10,8 @@ MapReducer::MapReducer(std::string inputDir, std::string outputDir, std::string 
 	inputDirectory_(inputDir), 
 	outputDirectory_(outputDir),
 	intermediateDirectory_(middleDir),
-	mapSorter(LEADING_STRING_MAPPED_FILES, LEADING_STRING_SORTED_FILES)
+	mapSorter(folderNameForMapOutput, folderNameForSorterOutput),
+	mapBook(intermediateDirectory_ + "\\" + folderNameForMapOutput, bufferSize)
 {}
 
 
@@ -56,6 +57,11 @@ bool MapReducer::validateDirectories()
 	bool results = fileManager.validDirectory(inputDirectory_);
 	results = results && fileManager.validDirectory(outputDirectory_);
 	results = results && fileManager.validDirectory(intermediateDirectory_);
+	if (results == true)
+	{
+		results = results && fileManager.createDirectory(intermediateDirectory_, folderNameForMapOutput);
+		results = results && fileManager.createDirectory(intermediateDirectory_, folderNameForSorterOutput);
+	}
 	return results;
 }
 
@@ -63,18 +69,18 @@ bool MapReducer::doReduce(std::string& outputFileName)
 {
 	if (validateDirectories())
 	{
+		// For the input Directory read the list of files 
 		std::vector<std::string> fileList;
 		fileManager.getListOfTextFiles(inputDirectory_, fileList);
 
-		//initialize Map Object
-		bool successMap;
-
-		// Input Processing and initial Map Call
+		// Input Processing and Map Call for Each file 
 		for (size_t fileCount = 0; fileCount < fileList.size(); fileCount++)
 		{
 			std::vector<std::string> lines;
+			// Read Each File Into a Vector of Strings 
 			if (fileManager.readFileIntoVector(inputDirectory_, fileList.at(fileCount), lines))
 			{
+				// Call the Map Function for each Line
 				for (size_t fileLine = 0; fileLine < lines.size(); fileLine++)
 				{
 					//Map Function --> Map
@@ -89,29 +95,11 @@ bool MapReducer::doReduce(std::string& outputFileName)
 
 		fileList.clear();
 
+		std::string outputMapDirectory = intermediateDirectory_ + "\\" + folderNameForMapOutput;
+		std::string outputSortDirectory = intermediateDirectory_ + "\\" + folderNameForSorterOutput;
+		mapSorter.sortMappedFiles(outputMapDirectory, outputSortDirectory);
 
-		// SORT WRITES OUTPUT FILE 
-		if (!fileManager.getListOfTextFilesBasedOnStart(intermediateDirectory_, LEADING_STRING_MAPPED_FILES, fileList))
-		{
-			std::cout << "Unable to get List of Files created by the MAPPED Directory" << std::endl;
-		}
-
-		// Call Sort Function
-		for (size_t fileCount = 0; fileCount < fileList.size(); fileCount++)
-		{
-			if (!mapSorter.addFileContentsToSorter(intermediateDirectory_, fileList.at(fileCount)))
-			{
-				std::cout << "Unable to add File: " << intermediateDirectory_ << "\\" << fileList.at(fileCount) << "To Sorted List" << std::endl;
-			}
-		}
-	
-		std::string sortedFileName = ""; //TODO
-		if (!mapSorter.writeSortedMaptoFile(intermediateDirectory_, sortedFileName))
-		{
-			std::cout << "Unable to Create Sorted Map File " << std::endl;
-			return false;
-		}
-
+		
 		// SORT WRITES OUTPUT FILE 
 
 
@@ -124,6 +112,7 @@ bool MapReducer::doReduce(std::string& outputFileName)
 	}	
 	else
 	{
-
+		return false;
 	}
+	return true;
 }

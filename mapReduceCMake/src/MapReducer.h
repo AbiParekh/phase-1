@@ -13,58 +13,62 @@ class MapReducer
 
 public:
 
-// Constructor with inputs
-MapReducer(std::string inputDir, std::string outputDir, std::string middleDir);
+	// Constructor with inputs
+	MapReducer(std::string inputDir, std::string outputDir, std::string middleDir);
 
-bool reduce(std::string& outputFileName);
+	bool reduce(std::string& outputFileName);
 
-std::string getInputDir();
+	std::string getInputDir();
 
-std::string getOutputDir();
+	std::string getOutputDir();
 
-std::string getIntermediateDir();
+	std::string getIntermediateDir();
 
-void setInputDir(std::string);
+	void setInputDir(std::string);
 
-void setOutputDir(std::string);
+	void setOutputDir(std::string);
 
-void setIntermediateDir(std::string);
+	void setIntermediateDir(std::string);
 
 private:
 
-/// <summary>
-/// Validate the Directories required for Reduction 
-/// </summary>
-/// S-OConnor TODO Fill Out Comment
-/// <returns></returns>
-bool validateDirectories();
+	/// <summary>
+	/// Validate the Directories required for Reduction 
+	/// </summary>
+	/// S-OConnor TODO Fill Out Comment
+	/// <returns></returns>
+	bool validateDirectories();
 
-bool doReduce(std::string& outputFileName);
+	bool doReduce(std::string& outputFileName);
 
-// Variables with Map Reducer
-const std::string LEADING_STRING_MAPPED_FILES = "postMap_";
+	// Variables with Map Reducer
+	const std::string folderNameForMapOutput = "MapOutput";
 
-const std::string LEADING_STRING_SORTED_FILES = "postSorting_";
+	const std::string folderNameForSorterOutput = "SorterOutput";
 
-std::string inputDirectory_;
+	const std::size_t bufferSize{ 3000 };
 
-std::string outputDirectory_;
+	// Input Argument provide at time of construction with the location of the input files
+	std::string inputDirectory_;
 
-std::string intermediateDirectory_;
+	// Input Argument provide at time of construction with the location of an existing temporary directory for storing the final output
+	std::string outputDirectory_;
 
-std::size_t bufferSize{ 3000 };
+	// Input Argument provide at time of construction with the location of an existing temporary directory for storing working files
+	std::string intermediateDirectory_;
 
-FileIOManagement fileManager;
+	// Map Object 
+	FileIOManagement fileManager;
 
-MapSorter mapSorter;
+	// 
+	MapSorter mapSorter;
 
-//creates a new map vector pointing to input directory and sets max buffer size
-Map mapBook{ inputDirectory_, bufferSize };
+	// A new map vector pointing to input directory and sets max buffer size
+	Map mapBook; 
+};
 
 //instantiate Reduce object
 //Reduce reduceBook{intermediateDirectory_, bufferSize //with buffer memory
 
 
-
-};
 // TODO: Reference additional headers your program requires here.

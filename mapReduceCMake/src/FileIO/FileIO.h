@@ -68,8 +68,42 @@ public:
 	/// <returns>True if function was able to return fileList</returns>
 	bool getListOfTextFilesBasedOnStart(const std::string& inputFolder, const std::string& startingSubString, std::vector<std::string>& fileList);
 
+	/// <summary>
+	/// 
+	/// </summary>
 	bool createDirectory(const std::string& folderPath, const std::string& newFolderName);
 
-	bool deleteDirectoryContents(const std::string& folderPath, const std::string& DeleteFolderName);
+private:
+	/// <summary>
+	/// Hidden Interface 
+	/// </summary>
+	bool doWriteVectorToFile(const std::string filePath, const std::string fileName, const std::vector<std::string>& items);
+
+	/// <summary>
+	/// Hidden Interface 
+	/// </summary>
+	bool doReadFileIntoVector(const std::string filePath, const std::string fileName, std::vector<std::string>& items);
+
+	/// <summary>
+	/// Hidden Interface 
+	/// </summary>
+	bool doCanAccessFile(const std::string& filePath, const std::string& fileName);
+
+
+	/// <summary>
+	/// Hidden Interface 
+	/// </summary>
+	bool doValidDirectory(const std::string& folderPath);
+
+	/// <summary>
+	/// Hidden Interface 
+	/// </summary>
+	bool doGetListOfTextFiles(const std::string& inputFolder, std::vector<std::string>& fileList);
+
 	
+	/// <summary>
+	/// Hidden Interface 
+	/// </summary>
+	bool doCreateDirectory(const std::string& folderPath, const std::string& newFolderName);
+
 };

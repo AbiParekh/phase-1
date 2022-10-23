@@ -37,10 +37,11 @@ public:
 	bool copmareMapResults(std::map<std::string, uint32_t> expectedSortedMap)
 	{
 		bool result = true;
-
-		if (expectedSortedMap.size() != sortedMap.size())
+		std::map<std::string, uint32_t> storedMap;
+		getSortedMap(storedMap);
+		if (expectedSortedMap.size() != storedMap.size())
 		{
-			std::cout << "Output Map is Not The Expected Size"
+			std::cout << "Output Map is Not The Expected Size" << std::endl;
 			result = false;
 		}
 		std::map<std::string, uint32_t>::iterator mapit = expectedSortedMap.begin();
