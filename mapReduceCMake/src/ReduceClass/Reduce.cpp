@@ -94,12 +94,6 @@ bool Reduce::reduce(const std::string& key, int& val, int& reduced_val) {
         total_sum += (Iter);
     reduced_vector.push_back(std::pair<string, int>(key, total_sum));
     }
-    //for loop iterate through the input vector
-    //while it inserts reduced values into reduced_vector
-    //if statement to change boolean for executionComplete
-        //if input vector is empty, then executionComplete = true
-        //if not executionComplete = false cout <<error occurred << 
-        //if executionComplete = true
 
     bool executionComplete {true};
     return executionComplete; //return executionComplete; //false defines that task has failed
