@@ -19,6 +19,7 @@ using std::iterator;
 using std::fstream;
 using std::ifstream;
 using std::ostream_iterator;
+using std::make_pair;
 
 
 
@@ -51,6 +52,7 @@ Reduce::~Reduce()
 {};
 
 
+/*TO DO: WRITE COMMENTS ON IMPORTDATA*/
 bool Reduce::importData(const string& folderPath, const string& fileName)
     //from sorter grab the sorted data 
     //then insert the data into an input vector, then send it to the reduce method
@@ -63,7 +65,7 @@ bool Reduce::importData(const string& folderPath, const string& fileName)
 
         for (size_t iterator_index = 0; iterator_index < vec.size(); iterator_index++) {
 
-            reduce(vec.at(iterator_index));
+            reduce(vec.at(iterator_index ));
         }
     }
 
@@ -71,11 +73,12 @@ bool Reduce::importData(const string& folderPath, const string& fileName)
 };
 
 
-/*reduce function
+/*TO DO: WRITE COMMENTS reduce function
+take input vector from importData
 */
-
-void Reduce::reduce(const std::string& key, int& Iter start_val, int& Iter end_val, reduced_val) {
-    
+bool Reduce::reduce(const std::string& key, int& val, int& reduced_val) {
+    //int& Iter start_val, int& Iter end_val
+   
     bool executionComplete {false};
     bool vectorSent {false};
     std::vector<std::pair<string, int>> vec; //input data ("hello", [1,1,1], "hi", [1,1],...)
@@ -83,27 +86,36 @@ void Reduce::reduce(const std::string& key, int& Iter start_val, int& Iter end_v
 
     //int val = 0;
     int total_sum = 0; //total at each keyword
-    for (Iter* p_iterate = start_val; (p_iterate) != (*end_val); ++(*p_iterate)) {
-        total_sum += *(*p_iterate);
+    int sVal = vec[0].[0];
+    int eVal;
+    int Iter& = sVal;
+    // int& Iter eVal;
+    for (Iter* sVal; (Iter) != (eVal); ++(Iter)) {
+        total_sum += (Iter);
+    reduced_vector.push_back(std::pair<string, int>(key, total_sum));
     }
-    reduced_val = std::pair<string, int>(key, total_sum);
+    //for loop iterate through the input vector
+    //while it inserts reduced values into reduced_vector
+    //if statement to change boolean for executionComplete
+        //if input vector is empty, then executionComplete = true
+        //if not executionComplete = false cout <<error occurred << 
+        //if executionComplete = true
 
-    reduced_vector.push_back(reduced_val);
-
-    //return executionComplete; //false defines that task has failed
-
+    bool executionComplete {true};
+    return executionComplete; //return executionComplete; //false defines that task has failed
 }
 
-
+/*empty buffer */
 bool Reduce::emptyBuffer(){
     //clear the cache 
 };
 
 
-/*export the reduced values and its key from a vector to a file,
+/*TO DO: WRITE COMMENTS
+export the reduced values and its key from a vector to a file,
 send it to FileIOManagement*/
 
-bool Reduce::exportReduce(const string filename, int val) 
+bool Reduce::exportReduce(const string filename, const string key, const int val) 
     
 {
     bool executionComplete;
@@ -111,23 +123,21 @@ bool Reduce::exportReduce(const string filename, int val)
         
         bool vectorSent {false};
         //writes out all data to an export file
+        string buffFile;
+        //reduced_vector; //output vector
+        std::vector<std::pair<string, int>> reduced_vector; //output vector
 
-        reduced_vector; //output vector
-
-        ofstream out_file("final_output.txt"); //create an output file named final_output.txt
-        ostream_iterator<string, int> out_iterator(out_file, "\n");
-        copy(key, val, out_iterator);
-
+        IO_management.writeVectorToFile(this->intermediateDirectory, buffFile, reduced_vector);
+        bool vectorSent {true};
         return vectorSent; //false define vector was not exported
 
-        //copy(reduced_vector.begin(), reduced_vector.end(), out_iterator);
-        //cout << reduced_vector[0] << endl;
     }
     
 }
 
 
-/*export a success file once the reduce operation has successfully completed 
+/*TO DO: WRITE COMMENTS ON exportSuccess
+export a success file once the reduce operation has successfully completed 
 */
 bool Reduce::exportSuccess(const string filename) {
     //write success and export it to an output file
@@ -141,7 +151,7 @@ bool Reduce::exportSuccess(const string filename) {
         success_file <<"SUCCESS!\n";
         success_file.close();
     }
-    
+    return 0;
     
 }        
 
