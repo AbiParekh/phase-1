@@ -52,6 +52,7 @@ Reduce::~Reduce()
 {};
 
 
+
 /*TO DO: WRITE COMMENTS ON IMPORTDATA*/
 bool Reduce::importData(const string& folderPath, const string& fileName)
     //from sorter grab the sorted data 

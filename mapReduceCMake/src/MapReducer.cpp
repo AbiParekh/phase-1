@@ -98,16 +98,26 @@ bool MapReducer::doReduce(std::string& outputFileName)
 		std::string outputMapDirectory = intermediateDirectory_ + "\\" + folderNameForMapOutput;
 		std::string outputSortDirectory = intermediateDirectory_ + "\\" + folderNameForSorterOutput;
 		mapSorter.sortMappedFiles(outputMapDirectory, outputSortDirectory);
-
 		
-		// SORT WRITES OUTPUT FILE 
+		std::vector<std::string> sortedFileList;
+		fileManager.getListOfTextFiles(outputSortDirectory, sortedFileList, sortedFileName);
 
-
-		// Call Reduce Function
-			// Read from Sorted File
-			// Reduce Sorted File Contents 
-			// Write Output of Sorted File
-			// Write Successful File
+		if(!reduceOb.importData(outputSortDirectory, sortedFileName); // Pulls File and puts entire line into Vect
+		{
+			std::cout << "ERROR: Unable to import Sorted Data into Reducer" << std::endl
+		}
+		else if (reduceOb.reduceData()) // Go throught for loop and enters each key into the map with its value
+		{
+			std::cout << "ERROR: Unable to reduce data" << std::endl
+		}
+		else if (!reduceOb.exportReduce(outputDirectory))// Writes FFile to output Directory
+		{
+			std::cout << "ERROR: Unable to export Reduce " << std::endl;
+		}
+		else
+		{
+			reduceOb.exportSuccess; // Wrties Files 
+		}
 
 	}	
 	else

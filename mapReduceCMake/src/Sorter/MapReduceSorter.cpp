@@ -69,29 +69,8 @@ bool MapSorter::ParseLineIntoSortedMap(const std::string& line)
 	std::string DELIMITATOR_SUBSTRING = "),";
 	std::string FINAL_DELIMITATOR_SUBSTRING = ")";
 	std::string WORD_WRAP = "\"";
-/*
-	// While there are still more words pull them Apart 
-	while (AnotherWordRemaining(phrase, DELIMITATOR_SUBSTRING))
-	{
-		static int count = 0;
 
-		size_t length = phrase.find(DELIMITATOR_SUBSTRING);
-		std::string subString = phrase.substr(0, length +2);
-		phrase = phrase.substr(length + 2);
-		AddPhraseToMap(phrase, WORD_WRAP, WORD_WRAP);
-	}
-	
-	if (AnotherWordRemaining(phrase, FINAL_DELIMITATOR_SUBSTRING))
-	{
-
-	
-		size_t length = phrase.find(DELIMITATOR_SUBSTRING);
-		std::string subString = phrase.substr(0, length + 2);
-	
-	phrase = phrase.substr(0, length);
-	*/
 	AddPhraseToMap(phrase, WORD_WRAP, WORD_WRAP);
-//	}
 
 	return true;
 }
