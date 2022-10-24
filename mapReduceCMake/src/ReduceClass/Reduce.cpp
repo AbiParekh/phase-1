@@ -65,7 +65,7 @@ bool Reduce::importData(const string& folderPath, const string& fileName)
 
         for (size_t iterator_index = 0; iterator_index < vec.size(); iterator_index++) {
 
-            reduce(vec.at(iterator_index ));
+            reduce(vec.at(iterator_index )); //TO DO: FIX THIS
         }
     }
 
@@ -86,7 +86,7 @@ bool Reduce::reduce(const std::string& key, int& val, int& reduced_val) {
 
     //int val = 0;
     int total_sum = 0; //total at each keyword
-    int sVal = vec[0].[0];
+    int sVal = vec[0].[0]; //TO DO: FIX THIS
     int eVal;
     int Iter& = sVal;
     // int& Iter eVal;
