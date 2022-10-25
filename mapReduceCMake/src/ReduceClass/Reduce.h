@@ -81,13 +81,13 @@ class Reduce{
 
 
     private:
-            int bufferLimit{}; 
-            std::vector<std::pair<string, int>> vec; //input data
-            std::vector<std::pair<string, int>> reduced_vector; //reduced vector for output
-            int maxbuffsize{};
-            string intermediateDirectory;
-            string initialDirectory;
-            FileIOManagement IO_management;
+//             int bufferLimit{}; 
+//             std::vector<std::pair<string, int>> vec; //input data
+//             std::vector<std::pair<string, int>> reduced_vector; //reduced vector for output
+//             int maxbuffsize{};
+//             string intermediateDirectory;
+//             string initialDirectory;
+//             FileIOManagement IO_management;
 };
 
 #endif  //REDUCE_H, header file for Reduce class
