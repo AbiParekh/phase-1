@@ -97,7 +97,11 @@ bool MapReducer::doReduce(std::string& outputFileName)
 		std::string sortedFileName;
 		std::string outputMapDirectory = intermediateDirectory_ + "\\" + folderNameForMapOutput;
 		std::string outputSortDirectory = intermediateDirectory_ + "\\" + folderNameForSorterOutput;
-		mapSorter.sortMappedFiles(outputMapDirectory, outputSortDirectory, sortedFileName);
+		if (!mapSorter.sortMappedFiles(outputMapDirectory, outputSortDirectory, sortedFileName))
+		{
+			std::cout << "ERROR: Unable to Sort Mapped Files Output" << std::endl;
+			return false;
+		}
 		/*
 		if(!reduceOb.importData(outputSortDirectory, sortedFileName); // Pulls File and puts entire line into Vect
 		{
