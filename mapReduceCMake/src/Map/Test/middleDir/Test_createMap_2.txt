@@ -1,3 +1,0 @@
-("from",1)
-("test",1)
-("createmap",1)
