@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <utility>
 #include <fstream>
+#include <map>
 using namespace std;
 
 using std::string;
@@ -20,6 +21,7 @@ using std::fstream;
 using std::ifstream;
 using std::ostream_iterator;
 using std::make_pair;
+using std::map;
 
 
 
@@ -51,7 +53,16 @@ Reduce::~Reduce()
     //destructor
 {};
 
+Reduce::Reduce(const Reduce& mem) {
+    bufferLimit = mem.bufferLimit;
+    intermediateDirectory = mem.intermediateDirectory;
+    initialDirectory = mem.initialDirectory;
+    IO_management = mem.IO_management;
+    vec = mem.vec;
+    reduced_vector = mem.reduced_vector;
 
+
+}
 
 /*TO DO: WRITE COMMENTS ON IMPORTDATA*/
 bool Reduce::importData(const string& folderPath, const string& fileName)
@@ -60,50 +71,84 @@ bool Reduce::importData(const string& folderPath, const string& fileName)
     
 {   
     //declare an empty vector
-    std::vector<std::string> vec;
-
+    std::vector<std::pair<string, uint32_t>> vec;
+    bool dataAttained = true;
+    const std::string Encap_1 = "[";
+    const std::string Encap_2 = "]";
     if(IO_management.readFileIntoVector(folderPath, fileName, vec)) {
 
         for (size_t iterator_index = 0; iterator_index < vec.size(); iterator_index++) {
 
-            reduce(vec.at(iterator_index )); //TO DO: FIX THIS
+            reduce(vec.at(iterator_index), Encap_1); //TO DO: FIX THIS
+            //reduce(vec.at(iterator_index));
         }
     }
+    else{
+        cout<<"Sorted data was not imported to reducer" <<endl;
+        dataAttained = false;
+    }
 
-    return true;
+    return dataAttained;
 };
 
+
+std::string Reduce::configOutput(const std::string& key, const uint32_t& val) {
+    std::string configuredOutput = "(\"" + key + "\"";
+    for (size_t item = 0; item < val; item++) {
+        configuredOutput.append(key, val);
+    }
+    configuredOutput.append("");
+
+    return configuredOutput;
+}
 
 /*TO DO: WRITE COMMENTS reduce function
 take input vector from importData
+//for loop iterate through the input vector
+    //while it inserts reduced values into reduced_vector
+    //if statement to change boolean for executionComplete
+        //if input vector is empty, then executionComplete = true
+        //if not executionComplete = false cout <<error occurred << 
+        //if executionComplete = true
+
+    //for loop for embedding from vec to reduced vector 
 */
-bool Reduce::reduce(const std::string& key, int& val, int& reduced_val) {
+bool Reduce::reduce() {
     //int& Iter start_val, int& Iter end_val
    
-    bool executionComplete {false};
-    bool vectorSent {false};
-    std::vector<std::pair<string, int>> vec; //input data ("hello", [1,1,1], "hi", [1,1],...)
-    std::vector<std::pair<string, int>> reduced_vector; //currently empty, output vector
 
-    //int val = 0;
+    bool executionComplete = false;
+    bool vectorSent = false;
+    std::vector<std::pair<string, uint32_t>> vec; //input data ("hello", [1,1,1], "hi", [1,1],...)
+    std::vector<std::pair<string, uint32_t>> reduced_vector; //currently empty, output vector
+    std::vector<std::string,uint32_t>::iterator rVec;
+
     int total_sum = 0; //total at each keyword
-    int sVal = vec[0].[0]; //TO DO: FIX THIS
-    int eVal;
-    int Iter& = sVal;
-    // int& Iter eVal;
-    for (Iter* sVal; (Iter) != (eVal); ++(Iter)) {
-        total_sum += (Iter);
-    reduced_vector.push_back(std::pair<string, int>(key, total_sum));
-    }
+    
+    if (executionComplete = false) {
+            for (std::vector<std::string,uint32_t>::iterator rVec = vec.begin(); rVec != vec.end(); ++rVec) {
+                vec.push_back(configOutput(rVec->first, rVec->second));
 
-    bool executionComplete {true};
+             while (auto i : vec; vec[i].second.begin() != vec[i].second.end(); i++) {
+                int total_sum = i;
+                reduced_vector.push_back(configOutput(vec->first, vec->second));
+        };
+
+        executionComplete = true;
+        //return executionComplete;
+        
+        }
+
+    }
+    else {
+        cout<< "execution was not completed" <<endl;
+        executionComplete = false;
+        //return executionComplete;
+    }
+        
+
     return executionComplete; //return executionComplete; //false defines that task has failed
 }
-
-/*empty buffer */
-bool Reduce::emptyBuffer(){
-    //clear the cache 
-};
 
 
 /*TO DO: WRITE COMMENTS
@@ -127,6 +172,12 @@ bool Reduce::exportReduce(const string filename, const string key, const int val
         return vectorSent; //false define vector was not exported
 
     }
+    else{
+        cout<< "was not able to export the reduced file" <<endl;
+        bool vectorSent = false;
+        return vectorSent;
+    }
+
     
 }
 
@@ -146,9 +197,19 @@ bool Reduce::exportSuccess(const string filename) {
         success_file <<"SUCCESS!\n";
         success_file.close();
     }
-    return 0;
+
+    else {
+        cout << "Reduced file has not been sent, will not allow success to occur" << endl;
+        vectorSent = false;
+    };
+    return vectorSent;
     
 }        
+
+/*empty buffer */
+bool Reduce::emptyBuffer(){
+    //clear the cache 
+};
 
 ostream& operator<<(ostream& output, const vec& v)
 {
