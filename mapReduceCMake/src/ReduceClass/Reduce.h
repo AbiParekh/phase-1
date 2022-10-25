@@ -29,27 +29,32 @@ class Reduce{
             Reduce(); 
             //constructor
 
-            Reduce(const string intermediateDir); 
+            Reduce(const string tMemory); 
             //with no memory allocation
 
-            Reduce(const string intermediateDir, size_t buffer); 
+            Reduce(const string tMemory, size_t bufferSize); 
             //with buffer memory
 
             ~Reduce(); 
             //destructor
 
-            bool importData(const string& filepath, const string& filename);
+
+    protected:
+
+            bool importData(const string& folderPath, const string& fileName);
             //import data from sorter class
             //pass 
 
-            std::vector<string> vec;
+            std::vector<std::pair<string, uint32_t>> vec;
             //input vector with data inserted from the sorter
 
-            std::vector<std::pair<string, int>> reduced_vector;
+            std::vector<std::pair<string, uint32_t>> reduced_vector;
             //vector used for storing reduced values from the reduce function.
 
-            bool reduce(const std::string& key, int& val, int& reduced_val); 
-            //four parameters, a string key, a start value, a end value, and a output redued value
+            std::string Reduce::configOutput(const std::string& key, const uint32_t& val);
+            //configure the output 
+
+            bool reduce(); 
             //Iterator will start from the front and iterate to the end for the values of a key
             //it will add to the counter how many it iterated through
             //key stays constant with no change
@@ -67,15 +72,14 @@ class Reduce{
             bool exportSuccess(const string filename); 
             //write success to file and export
 
+        
+            std::vector<std::pair<string, int>> vec; //input data
+            std::vector<std::pair<string, int>> reduced_vector; //reduced vector for output
 
-    private:
-//             int bufferLimit{}; 
-//             std::vector<std::pair<string, int>> vec; //input data
-//             std::vector<std::pair<string, int>> reduced_vector; //reduced vector for output
-//             int maxbuffsize{};
-//             string intermediateDirectory;
-//             string initialDirectory;
-//             FileIOManagement IO_management;
+            int bufferLimit{}; //memory limits
+            string intermediateDirectory; //saved to buffer
+            string initialDirectory; //FileIO
+            FileIOManagement IO_management; //using fileio class
 };
 
 #endif  //REDUCE_H, header file for Reduce class
