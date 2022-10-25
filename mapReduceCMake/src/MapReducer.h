@@ -5,7 +5,6 @@
 #include <vector>
 #include <string>
 #include "Sorter/MapReduceSorter.h"
-#include "ReduceClass/Reduce.h"
 #include "FileIO/fileIO.h"
 #include "Map/Map.h"
 
@@ -67,7 +66,7 @@ private:
 	// A new map vector pointing to input directory and sets max buffer size
 	Map mapBook; 
 
-	Reduce reduceOb;
+	//Reduce reduceOb;
 };
 
 //instantiate Reduce object

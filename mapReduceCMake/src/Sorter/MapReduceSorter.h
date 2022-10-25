@@ -13,7 +13,7 @@ public:
 
 		//Destructor
 		
-		bool sortMappedFiles(std::string outputMapDirectory, std::string outpuSortDirectory);
+		bool sortMappedFiles(std::string outputMapDirectory, std::string outpuSortDirectory, std::string& outputFileName);
 
 protected:
 
@@ -67,7 +67,7 @@ protected:
 	/// <summary>
 	/// 
 	/// </summary>
-	bool doSortMappedFiles(std::string outputMapDirectory, std::string outpuSortDirectory);
+	bool doSortMappedFiles(std::string outputMapDirectory, std::string outpuSortDirectory, std::string& outputFileName);
 
 	
 	void getSortedMap(std::map<std::string, uint32_t>& returnMap);

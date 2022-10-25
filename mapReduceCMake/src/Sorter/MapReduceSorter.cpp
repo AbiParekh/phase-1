@@ -111,12 +111,12 @@ bool MapSorter::AddPhraseToMap(const std::string& phrase, const std::string& sta
 }
 
 
-bool MapSorter::sortMappedFiles(std::string outputMapDirectory, std::string outpuSortDirectory)
+bool MapSorter::sortMappedFiles(std::string outputMapDirectory, std::string outpuSortDirectory, std::string& outputFileName)
 {
-	return doSortMappedFiles(outputMapDirectory, outpuSortDirectory);
+	return doSortMappedFiles(outputMapDirectory, outpuSortDirectory, outputFileName);
 }
 
-bool MapSorter::doSortMappedFiles(std::string outputMapDirectory, std::string outpuSortDirectory)
+bool MapSorter::doSortMappedFiles(std::string outputMapDirectory, std::string outpuSortDirectory, std::string& outputFileName)
 {
 	bool results = true;
 	std::vector<std::string> fileList;
@@ -142,6 +142,11 @@ bool MapSorter::doSortMappedFiles(std::string outputMapDirectory, std::string ou
 			std::cout << "Error: Unable to Create Sorted Map File " << std::endl;
 			results = false;
 		}
+		else
+		{
+			outputFileName = sortedFileName;
+		}
+		
 
 	}
 	

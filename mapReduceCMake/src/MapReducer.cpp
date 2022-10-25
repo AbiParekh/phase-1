@@ -94,14 +94,11 @@ bool MapReducer::doReduce(std::string& outputFileName)
 		}
 
 		fileList.clear();
-
+		std::string sortedFileName;
 		std::string outputMapDirectory = intermediateDirectory_ + "\\" + folderNameForMapOutput;
 		std::string outputSortDirectory = intermediateDirectory_ + "\\" + folderNameForSorterOutput;
-		mapSorter.sortMappedFiles(outputMapDirectory, outputSortDirectory);
-		
-		std::vector<std::string> sortedFileList;
-		fileManager.getListOfTextFiles(outputSortDirectory, sortedFileList, sortedFileName);
-
+		mapSorter.sortMappedFiles(outputMapDirectory, outputSortDirectory, sortedFileName);
+		/*
 		if(!reduceOb.importData(outputSortDirectory, sortedFileName); // Pulls File and puts entire line into Vect
 		{
 			std::cout << "ERROR: Unable to import Sorted Data into Reducer" << std::endl
@@ -118,7 +115,7 @@ bool MapReducer::doReduce(std::string& outputFileName)
 		{
 			reduceOb.exportSuccess; // Wrties Files 
 		}
-
+		*/
 	}	
 	else
 	{

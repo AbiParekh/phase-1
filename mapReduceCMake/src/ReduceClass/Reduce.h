@@ -48,7 +48,6 @@ class Reduce{
             std::vector<std::pair<string, int>> reduced_vector;
             //vector used for storing reduced values from the reduce function.
 
-
             bool reduce(const std::string& key, int& val, int& reduced_val); 
             //four parameters, a string key, a start value, a end value, and a output redued value
             //Iterator will start from the front and iterate to the end for the values of a key
@@ -70,13 +69,13 @@ class Reduce{
 
 
     private:
-            int bufferLimit{}; 
-            std::vector<std::pair<string, int>> vec; //input data
-            std::vector<std::pair<string, int>> reduced_vector; //reduced vector for output
-            int maxbuffsize{};
-            string intermediateDirectory;
-            string initialDirectory;
-            FileIOManagement IO_management;
+//             int bufferLimit{}; 
+//             std::vector<std::pair<string, int>> vec; //input data
+//             std::vector<std::pair<string, int>> reduced_vector; //reduced vector for output
+//             int maxbuffsize{};
+//             string intermediateDirectory;
+//             string initialDirectory;
+//             FileIOManagement IO_management;
 };
 
 #endif  //REDUCE_H, header file for Reduce class
