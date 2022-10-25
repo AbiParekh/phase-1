@@ -28,6 +28,7 @@ bool Test_exportMap();
 bool Test_flushMap();
 bool Test_emptyCache();
 bool Test_emptyCache_2();
+bool Test_apostrophe();
 
 class testMap : public Map
 {
@@ -56,6 +57,8 @@ int main()
 	std::map<std::string, bool>  testResults;
 
 	// readFileIntoVector Test
+	std::pair<std::string, bool> apostrophe("Test_apostrophe", Test_apostrophe());
+	testResults.insert(apostrophe);
 	std::pair<std::string, bool> createMap("Test_createMap", Test_createMap());
 	testResults.insert(createMap);
 	std::pair<std::string, bool> exportMap("Test_exportMap", Test_exportMap());
@@ -66,6 +69,7 @@ int main()
 	testResults.insert(emptyCache);
 	std::pair<std::string, bool> emptyCacheFail("Test_emptyCacheFail", Test_emptyCache_2());
 	testResults.insert(emptyCacheFail);
+	
 	
 	ReportResults(testResults);
 	return 0;
@@ -129,7 +133,15 @@ bool Test_flushMap()
 {
 	Map myBook{ middleDirectory, 8 }; //buffersize is 1 token smaller, creates buffer to be flushed
 	myBook.createMap("Test_flushMap.txt", "This is a test file genereated from Test_flushMap");
-	return myBook.flushMap("Test_createMap.txt");
+	return myBook.flushMap("Test_flushMap.txt");
+	//if( sizeof(myBook)
+}
+
+bool Test_apostrophe()
+{
+	Map myBook{ middleDirectory, 8 }; //buffersize is 1 token smaller, creates buffer to be flushed
+	myBook.createMap("Test_apostrophe.txt", "This string's apostrophe. ");
+	return myBook.flushMap("Test_apostrophe.txt");
 	//if( sizeof(myBook)
 }
 

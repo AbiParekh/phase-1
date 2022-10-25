@@ -47,8 +47,9 @@ bool Map::createMap(const string filename, const string strCAPS)
 	
 	for (int tokenStart = 0, tokenEnd = 0; tokenEnd <= str.length(); tokenEnd++) //iterate through each char, check if end of work
 	{
-		if(!iswalnum(str[tokenEnd]) || tokenEnd == str.length()) //checks if char is not alphanumeric (iswalnum)
+		if((!iswalnum(str[tokenEnd]) && !(str[tokenEnd] == '\'')) || tokenEnd == str.length()) //checks if char is not alphanumeric (iswalnum) or apostrophe
 		{
+
 			if (tokenStart != tokenEnd) //not first char in word
 			{
 				parsedWord = str.substr(tokenStart, tokenEnd - tokenStart);
