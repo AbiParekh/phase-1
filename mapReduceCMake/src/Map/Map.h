@@ -43,16 +43,19 @@ public:
 	//Destructor
 	~Map(); 
 
+	//Copy
+	Map(const Map& t);
+
 	//tokenizes words, accepts a key(filename) and value(single line) from fileIO
-	void createMap(string filename, string inputLine);
+	bool createMap(string filename, string inputLine);
 
 	//tokenizes words, accepts a key(filepath), key(filename) and value(single line) from fileIO
-	void createMap(const string filepath, const string filename, const string inputLine);
+	bool createMap(const string filepath, const string filename, const string inputLine);
 
 	//clears Maps contents, prepares to read in new file
 	bool flushMap(const string filename);
 
-private: /** PRIVATE MEMBER FUNCTIONS **/
+protected: /** PRIVATE MEMBER FUNCTIONS **/
 
 	//empties buffer
 	bool emptyCache();

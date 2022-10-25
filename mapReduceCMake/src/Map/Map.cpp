@@ -29,7 +29,18 @@ Map::Map(const string intermediate, size_t sizeOfBuffer)
 	: tempDirectory{ intermediate }, maxBufferSize{ sizeOfBuffer }
 {};
 
-void Map::createMap(const string filename, const string strCAPS)
+Map::Map(const Map& t)
+{
+	maxBufferSize = t.maxBufferSize;
+	exportBuffer = t.exportBuffer;
+	tokenWords = t.tokenWords;
+	tempDirectory = t.tempDirectory;
+	mapFileManager = t.mapFileManager;
+	fileIndex = t.fileIndex;
+
+}
+
+bool Map::createMap(const string filename, const string strCAPS)
 {
 	bool isExported{ false };
 	string parsedWord, str{ lowerCaseMap(strCAPS) };
@@ -50,6 +61,7 @@ void Map::createMap(const string filename, const string strCAPS)
 			}
 		}
 	}
+	return isExported;
 };
 
 bool Map::flushMap(const string fileName)
