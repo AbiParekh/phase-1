@@ -48,18 +48,6 @@ class Reduce{
             std::vector<std::pair<string, int>> reduced_vector;
             //vector used for storing reduced values from the reduce function.
 
-            bool reduceData()
-            {
-                
-                for (muvector::iterator vecIt = myvector.begin();
-                    vecIt != myvector.end();
-                    ++vecIT)
-                {
-
-                }
-            }
-
-
             bool reduce(const std::string& key, int& val, int& reduced_val); 
             //four parameters, a string key, a start value, a end value, and a output redued value
             //Iterator will start from the front and iterate to the end for the values of a key
