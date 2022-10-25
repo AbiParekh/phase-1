@@ -14,6 +14,8 @@ bool importData(const string& filepath, const string& filename) {
 void test_importData() {
     //cases
     //importData(test filepath, test filename);
+    Reduce reduce;
+    reduce.importData("filePath", "fileName");
     
 }
 
