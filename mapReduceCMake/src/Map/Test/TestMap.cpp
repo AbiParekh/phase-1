@@ -13,10 +13,10 @@
 #define BufferSize 3000 //number tokenPairs per partitioned file (tempDirectory)
 namespace fs = std::filesystem;
 
-string path = fs::current_path().parent_path().parent_path().generic_string();
+string path = fs::current_path().generic_string();
 //C:\Users\esevieux\source\repos\phase - 1\mapReduceCMake
-string inputDirectory{ path + "/src/Map/Test/inputDir" };
-string middleDirectory{ path + "/src/Map/Test/middleDir" };
+string inputDirectory{ path + "/inputDir" };
+string middleDirectory{ path + "/middleDir" };
 //string outputDirectory{ path +  "/demo/outputDir" };
 FileIOManagement fileManager;
 std::vector<std::string> fileList;

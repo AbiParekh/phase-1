@@ -66,11 +66,15 @@ protected: /** PRIVATE MEMBER FUNCTIONS **/
 	//Write contents of Buffer to file using FileIO. Buffer is emptied on this call.
 	bool exportMap(const string filename, int index);
 
+	//checks each character to remove punctuation from word, validates apostrophe as char
+	bool Map::removePunctuation(const string str, const int tokenStart, const int tokenEnd);
+
 	// converts a string into lowercase
 	string lowerCaseMap(const string&); 
 
 	// adds suffix to end of intermediate file
 	string addFileSuffix(const string filename, int index);
+
 
 
 private: /** PRIVATE DATA MEMBERS **/

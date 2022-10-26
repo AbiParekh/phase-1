@@ -40,6 +40,46 @@ Map::Map(const Map& t)
 
 }
 
+bool Map::removePunctuation(const string str, const int tokenStart, const int tokenEnd)
+{
+	//not alphanumeric and not apostrophe, must be punctuation
+	if (!iswalnum(str[tokenEnd]) && !(str[tokenEnd] == '\'') )
+	{
+		return true;
+	}
+	
+	else if (tokenEnd == str.length())
+	{
+		return true;
+	}
+
+	//determine if apostrophe should be char or punct
+	else if (str[tokenEnd] == '\'') 
+	{
+		//apostrophe is first char in word, treat as punctuation
+		if (tokenStart == tokenEnd)
+		{
+			return true;
+		}
+
+		//apostrophe is last char in word, check if ok to keep
+		if (!iswalnum(str[tokenEnd + 1]))
+		{
+			//apostrophe ok since contracts word, i.e class' or o' clock
+			if (str[tokenEnd - 1] == 's' || str[tokenEnd - 1] == 'o')
+			{
+				return false;
+			}
+			//apostrophe must be a punctuation
+			else
+			{
+				return true;
+			}	
+		}
+	}
+	return false;
+}
+
 bool Map::createMap(const string filename, const string strCAPS)
 {
 	bool isExported{ false };
@@ -47,7 +87,8 @@ bool Map::createMap(const string filename, const string strCAPS)
 	
 	for (int tokenStart = 0, tokenEnd = 0; tokenEnd <= str.length(); tokenEnd++) //iterate through each char, check if end of work
 	{
-		if((!iswalnum(str[tokenEnd]) && !(str[tokenEnd] == '\'')) || tokenEnd == str.length()) //checks if char is not alphanumeric (iswalnum) or apostrophe
+		//((!iswalnum(str[tokenEnd]) && !(str[tokenEnd] == '\'')) || tokenEnd == str.length()) //checks if char is not alphanumeric (iswalnum) or apostrophe
+		if(removePunctuation(str,tokenStart, tokenEnd))
 		{
 
 			if (tokenStart != tokenEnd) //not first char in word
