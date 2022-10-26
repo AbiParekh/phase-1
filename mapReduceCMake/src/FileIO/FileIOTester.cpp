@@ -16,7 +16,7 @@ bool Test_validDirectory();
 bool Test_getListOfTextFiles();
 bool Test_createDirectory();
 bool Test_writeVectorToFile();
-
+bool Test_writeVectorToFileAppend();
 
 int main(int argc, char* argv[])
 {
@@ -48,8 +48,12 @@ int main(int argc, char* argv[])
 
 	
 	//writeVectorToFile Test
-	std::pair<std::string, bool> writeVectorToFile("Test_writeVectorToFiley", Test_writeVectorToFile());
+	std::pair<std::string, bool> writeVectorToFile("Test_writeVectorToFile", Test_writeVectorToFile());
 	testResults.insert(writeVectorToFile);
+
+	//writeVectorToFile Append Test
+	std::pair<std::string, bool> writeVectorToFileAppend("Test_writeVectorToFileAppend", Test_writeVectorToFileAppend());
+	testResults.insert(writeVectorToFileAppend);
 
 	ReportResults(testResults);
 
@@ -272,6 +276,73 @@ bool Test_writeVectorToFile()
 	VectorToBePushedIntoFileTest.push_back("(\"dream\", 1)");
 
 	fileIO.writeVectorToFile(inputFolderFor_readFileIntoVectorTest, outputFile, VectorToBePushedIntoFileTest);
+
+	std::string p1 = inputFolderFor_readFileIntoVectorTest + "\\" + compareableFile;
+	std::string p2 = inputFolderFor_readFileIntoVectorTest + "\\" + outputFile;
+	std::ifstream f1(p1, std::ifstream::binary | std::ifstream::ate);
+	std::ifstream f2(p2, std::ifstream::binary | std::ifstream::ate);
+
+	if (f1.fail() || f2.fail()) {
+		results_writeVectorToFile = false; //file problem
+		std::cout << "Test_writeVectorToFile: Unable to open one of the files" << std::endl;
+	}
+
+	else if (f1.tellg() != f2.tellg()) {
+		results_writeVectorToFile = false; //size mismatch
+		std::cout << "Test_writeVectorToFile: Output File is not the expected Size " << std::endl;
+
+	}
+	else
+	{
+		//seek back to beginning and use std::equal to compare contents
+		f1.seekg(0, std::ifstream::beg);
+		f2.seekg(0, std::ifstream::beg);
+		bool eq = std::equal(std::istreambuf_iterator<char>(f1.rdbuf()),
+			std::istreambuf_iterator<char>(),
+			std::istreambuf_iterator<char>(f2.rdbuf()));
+		if (eq == false)
+		{
+			std::cout << "Test_writeVectorToFile: The Files are not equal" << std::endl;
+			results_writeVectorToFile = false;
+		}
+	}
+	return results_writeVectorToFile;
+}
+
+
+bool Test_writeVectorToFileAppend()
+{
+	// Test Parameters	
+	FileIOManagement fileIO;
+	bool results_writeVectorToFile = true;
+	std::string inputFolderFor_readFileIntoVectorTest = "..\\..\\src\\FileIO\\ConfigFiles";
+	std::string compareableFile = "boatOutput.txt";
+	std::string outputFile = "createdboatOutputAppend.txt";
+	std::vector<std::string> VectorToBePushedIntoFileTest;
+	VectorToBePushedIntoFileTest.push_back("(\"row\", 1)");
+	VectorToBePushedIntoFileTest.push_back("(\"row\", 1)");
+	VectorToBePushedIntoFileTest.push_back("(\"row\", 1)");
+	VectorToBePushedIntoFileTest.push_back("(\"your\", 1)");
+	VectorToBePushedIntoFileTest.push_back("(\"boat\", 1)");
+	VectorToBePushedIntoFileTest.push_back("(\"gently\", 1)");
+	VectorToBePushedIntoFileTest.push_back("(\"down\", 1)");
+	VectorToBePushedIntoFileTest.push_back("(\"the\", 1)");
+	fileIO.writeVectorToFile(inputFolderFor_readFileIntoVectorTest, outputFile, VectorToBePushedIntoFileTest);
+
+	std::vector<std::string> VectorToBePushedIntoFileTest2;
+	VectorToBePushedIntoFileTest2.push_back("(\"stream\", 1)");
+	VectorToBePushedIntoFileTest2.push_back("(\"merrily\", 1)");
+	VectorToBePushedIntoFileTest2.push_back("(\"merrily\", 1)");
+	VectorToBePushedIntoFileTest2.push_back("(\"merrily\", 1)");
+	VectorToBePushedIntoFileTest2.push_back("(\"merrily\", 1)");
+	VectorToBePushedIntoFileTest2.push_back("(\"life\", 1)");
+	VectorToBePushedIntoFileTest2.push_back("(\"is\", 1)");
+	VectorToBePushedIntoFileTest2.push_back("(\"but\", 1)");
+	VectorToBePushedIntoFileTest2.push_back("(\"a\", 1)");
+	VectorToBePushedIntoFileTest2.push_back("(\"dream\", 1)");
+
+	fileIO.writeVectorToFile(inputFolderFor_readFileIntoVectorTest, outputFile, VectorToBePushedIntoFileTest2, true);
+
 
 	std::string p1 = inputFolderFor_readFileIntoVectorTest + "\\" + compareableFile;
 	std::string p2 = inputFolderFor_readFileIntoVectorTest + "\\" + outputFile;

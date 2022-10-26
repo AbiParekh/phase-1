@@ -6,12 +6,13 @@
 #include <iostream>
 // PUBLIC METHODS
 
-MapReducer::MapReducer(std::string inputDir, std::string outputDir, std::string middleDir):
-	inputDirectory_(inputDir), 
+MapReducer::MapReducer(std::string inputDir, std::string outputDir, std::string middleDir) :
+	inputDirectory_(inputDir),
 	outputDirectory_(outputDir),
 	intermediateDirectory_(middleDir),
 	mapSorter(folderNameForMapOutput, folderNameForSorterOutput),
-	mapBook(intermediateDirectory_ + "\\" + folderNameForMapOutput, bufferSize)
+	mapBook(intermediateDirectory_ + "\\" + folderNameForMapOutput, bufferSize),
+	reduceOb(outputDir)
 {}
 
 
@@ -62,6 +63,19 @@ bool MapReducer::validateDirectories()
 		results = results && fileManager.createDirectory(intermediateDirectory_, folderNameForMapOutput);
 		results = results && fileManager.createDirectory(intermediateDirectory_, folderNameForSorterOutput);
 	}
+
+	if (results == true)
+	{
+		std::vector<std::string> fileList;
+		fileManager.getListOfTextFiles(outputDirectory_, fileList);
+		for (size_t count = 0; count < fileList.size() ; count++)
+		{
+			// Stuff exist in output directory...... kill it
+			std::string totalFilePath = outputDirectory_ + "\\" + fileList.at(count);
+			fileManager.deleteFile(totalFilePath);
+		}
+
+	}
 	return results;
 }
 
@@ -102,24 +116,12 @@ bool MapReducer::doReduce(std::string& outputFileName)
 			std::cout << "ERROR: Unable to Sort Mapped Files Output" << std::endl;
 			return false;
 		}
-		/*
-		if(!reduceOb.importData(outputSortDirectory, sortedFileName); // Pulls File and puts entire line into Vect
+		
+		if(!reduceOb.reduceFile(outputSortDirectory, sortedFileName, outputFileName)) // Pulls File and puts entire line into Vect
 		{
-			std::cout << "ERROR: Unable to import Sorted Data into Reducer" << std::endl
+			std::cout << "ERROR: Unable to import Sorted Data into Reducer" << std::endl;
+			return false;
 		}
-		else if (reduceOb.reduceData()) // Go throught for loop and enters each key into the map with its value
-		{
-			std::cout << "ERROR: Unable to reduce data" << std::endl
-		}
-		else if (!reduceOb.exportReduce(outputDirectory))// Writes FFile to output Directory
-		{
-			std::cout << "ERROR: Unable to export Reduce " << std::endl;
-		}
-		else
-		{
-			reduceOb.exportSuccess; // Wrties Files 
-		}
-		*/
 	}	
 	else
 	{

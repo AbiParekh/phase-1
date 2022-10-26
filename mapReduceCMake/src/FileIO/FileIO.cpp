@@ -6,9 +6,9 @@
 #include <cstdio>
 
 namespace fs = std::filesystem;
-bool FileIOManagement::writeVectorToFile(const std::string filePath, const std::string fileName, const std::vector<std::string>& items)
+bool FileIOManagement::writeVectorToFile(const std::string filePath, const std::string fileName, const std::vector<std::string>& items, bool append)
 {
-	return doWriteVectorToFile(filePath, fileName, items);
+	return doWriteVectorToFile(filePath, fileName, items, append );
 }
 
 
@@ -42,19 +42,34 @@ bool FileIOManagement::createDirectory(const std::string& folderPath, const std:
 bool FileIOManagement::getListOfTextFiles(const std::string& inputFolder, std::vector<std::string>& fileList)
 {
 	return doGetListOfTextFiles(inputFolder, fileList);
+
 }
+
+void FileIOManagement::deleteFile(const std::string& totalFilePath)
+{
+	doDeleteFile(totalFilePath);
+	return;
+}
+
 
 /// <summary>
 /// Hidden Interface 
 /// </summary>
-bool FileIOManagement::doWriteVectorToFile(const std::string filePath, const std::string fileName, const std::vector<std::string>& items)
+bool FileIOManagement::doWriteVectorToFile(const std::string filePath, const std::string fileName, const std::vector<std::string>& items, bool append)
 {
 	bool result = true;
 	if (validDirectory(filePath))
 	{
 		std::string fileNameAndPath = filePath + "\\" + fileName;
 		std::ofstream  outFile;
-		outFile.open(fileNameAndPath);
+		if (append == true)
+		{
+			outFile.open(fileNameAndPath, std::ios::app);
+		}
+		else
+		{
+			outFile.open(fileNameAndPath, std::ios::out);
+		}
 		if (!outFile || !outFile.good())
 		{
 			std::cout << "Error: Unable to create file (" << fileNameAndPath << ") in Write Vector to File Request" << std::endl;
@@ -201,4 +216,10 @@ bool FileIOManagement::doCreateDirectory(const std::string& folderPath, const st
 		result = false;
 	}
 	return result;
+}
+
+void FileIOManagement::doDeleteFile(const std::string& totalFilePath)
+{
+	fs::remove(totalFilePath);
+	return;
 }

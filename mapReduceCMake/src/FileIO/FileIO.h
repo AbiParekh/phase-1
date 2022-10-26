@@ -23,7 +23,7 @@ public:
 	/// <param name="fileName">Name of a File that DOES NOT EXIST within the directory of File Path</param>
 	/// <param name="items">Vector with the Contents that will be written into the file</param>
 	/// <returns>True if File Created Successfully</returns>
-	bool writeVectorToFile(const std::string filePath, const std::string fileName, const std::vector<std::string>& items);
+	bool writeVectorToFile(const std::string filePath, const std::string fileName, const std::vector<std::string>& items, bool append = false);
 
 	/// <summary>
 	/// Loads each line from file into a Vector where each line is written as a string
@@ -60,24 +60,18 @@ public:
 	bool getListOfTextFiles(const std::string& inputFolder, std::vector<std::string>& fileList);
 
 	/// <summary>
-	/// Get the List of Text File from within that Directory if the file starts with a Parameter provided by the user.
-	/// FileList contains just the name of the file plus the extension it does not include the route to the file.
-	/// </summary>
-	/// <param name="folderPath">Existing Location of the Directory that the file should be within</param>
-	/// <param name="fileList">Vector where file names will be stored</param>
-	/// <returns>True if function was able to return fileList</returns>
-	bool getListOfTextFilesBasedOnStart(const std::string& inputFolder, const std::string& startingSubString, std::vector<std::string>& fileList);
-
-	/// <summary>
 	/// 
 	/// </summary>
 	bool createDirectory(const std::string& folderPath, const std::string& newFolderName);
+
+
+	void deleteFile(const std::string& totalFilePath);
 
 private:
 	/// <summary>
 	/// Hidden Interface 
 	/// </summary>
-	bool doWriteVectorToFile(const std::string filePath, const std::string fileName, const std::vector<std::string>& items);
+	bool doWriteVectorToFile(const std::string filePath, const std::string fileName, const std::vector<std::string>& items, bool append);
 
 	/// <summary>
 	/// Hidden Interface 
@@ -105,5 +99,8 @@ private:
 	/// Hidden Interface 
 	/// </summary>
 	bool doCreateDirectory(const std::string& folderPath, const std::string& newFolderName);
+
+	void doDeleteFile(const std::string& totalFilePath);
+
 
 };

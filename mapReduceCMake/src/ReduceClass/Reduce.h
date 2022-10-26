@@ -26,11 +26,8 @@ class Reduce{
 
             //variables, method titles, constructors and destructor
 
-            Reduce(); 
+            Reduce(std::string OutputDirectory); 
             //constructor
-
-            Reduce(const string tMemory); 
-            //with no memory allocation
 
             Reduce(const string tMemory, size_t bufferSize); 
             //with buffer memory
@@ -38,48 +35,37 @@ class Reduce{
             ~Reduce(); 
             //destructor
 
-
-    protected:
-
-            bool importData(const string& folderPath, const string& fileName);
+            bool reduceFile(const std::string & folderPath, const std::string& fileName, std::string& outFile);
             //import data from sorter class
             //pass 
 
-            std::vector<std::pair<string, uint32_t>> vec;
-            //input vector with data inserted from the sorter
+
+protected:
+    
+    bool IsolateWord(const std::string& formattedWord, const std::string& startString, const std::string& endString, std::string& isloatedWord);
+ 
+    bool reduce(const std::string inputString);
+
+    bool parseLine(const std::string line, std::pair<std::string, uint32_t>& outputPair);
+
+    bool getNumberOfInstances(std::string format, std::string delim, uint32_t& instance);
+
+    bool Export(const std::string& fileName, std::pair<std::string, uint32_t>& outputPair);
+
+    void exportSuccess();
+
+
+  
+private:
 
             std::vector<std::pair<string, uint32_t>> reduced_vector;
-            //vector used for storing reduced values from the reduce function.
-
-            std::string Reduce::configOutput(const std::string& key, const uint32_t& val);
-            //configure the output 
-
-            bool reduce(); 
-            //Iterator will start from the front and iterate to the end for the values of a key
-            //it will add to the counter how many it iterated through
-            //key stays constant with no change
-            //values will be added and put under the key it belongs to.
-
-            bool emptyBuffer(); 
-            //clean up memory
-
-            std::vector<std::pair<string, int>>& exportReduce(); 
-            //output vector with reduced values
-
-            bool exportReduce(const string filename, const string key, const int val); 
-            //write to file and export
-
-            bool exportSuccess(const string filename); 
-            //write success to file and export
-
-        
-            std::vector<std::pair<string, int>> vec; //input data
-            std::vector<std::pair<string, int>> reduced_vector; //reduced vector for output
-
-            int bufferLimit{}; //memory limits
+            std::string outputDirectory;
+            size_t bufferLimit; //memory limits
             string intermediateDirectory; //saved to buffer
             string initialDirectory; //FileIO
             FileIOManagement IO_management; //using fileio class
+            const std::string outputFileName = "ReducerOutput.txt";;
+           
 };
 
 #endif  //REDUCE_H, header file for Reduce class

@@ -16,7 +16,6 @@ using namespace std;
 using std::string;
 using std::vector;
 using std::ostream;
-using std::iterator;
 using std::fstream;
 using std::ifstream;
 using std::ostream_iterator;
@@ -32,19 +31,15 @@ using std::map;
 
 
 
-Reduce::Reduce()
-    :bufferLimit{2048} //setting a limit to buffer memory
-{};
-
-
-Reduce::Reduce(const string tMemory)
-    :intermediateDirectory{tMemory}, bufferLimit{10}
-{};
+Reduce::Reduce(std::string OutputDir)
+    : bufferLimit(2048),
+        outputDirectory(OutputDir)
+{}
 
 
 Reduce::Reduce(const string tMemory, size_t bufferSize)
-    :intermediateDirectory{tMemory}, bufferLimit{bufferSize}
-{};
+    : intermediateDirectory{tMemory}, bufferLimit{bufferSize}
+{}
 
 //Reduce::Reduce(const string key)
 
@@ -53,166 +48,122 @@ Reduce::~Reduce()
     //destructor
 {};
 
-Reduce::Reduce(const Reduce& mem) {
-    bufferLimit = mem.bufferLimit;
-    intermediateDirectory = mem.intermediateDirectory;
-    initialDirectory = mem.initialDirectory;
-    IO_management = mem.IO_management;
-    vec = mem.vec;
-    reduced_vector = mem.reduced_vector;
+//from sorter grab the sorted data 
+//then insert the data into an input vector, then send it to the reduce method
+bool Reduce::reduceFile(const string& folderPath, const string& fileName, std::string& outputFile)
+{
+    outputFile = outputFileName;
 
-
-}
-
-/*TO DO: WRITE COMMENTS ON IMPORTDATA*/
-bool Reduce::importData(const string& folderPath, const string& fileName)
-    //from sorter grab the sorted data 
-    //then insert the data into an input vector, then send it to the reduce method
-    
-{   
     //declare an empty vector
-    std::vector<std::pair<string, uint32_t>> vec;
+    std::vector<std::string> vec;
     bool dataAttained = true;
-    const std::string Encap_1 = "[";
-    const std::string Encap_2 = "]";
-    if(IO_management.readFileIntoVector(folderPath, fileName, vec)) {
+    if (IO_management.readFileIntoVector(folderPath, fileName, vec)) 
+    {
 
-        for (size_t iterator_index = 0; iterator_index < vec.size(); iterator_index++) {
+        for (size_t currentLine = 0; currentLine < vec.size(); ++currentLine)
+        {
 
-            reduce(vec.at(iterator_index), Encap_1); //TO DO: FIX THIS
-            //reduce(vec.at(iterator_index));
+            if (!reduce(vec.at(currentLine)))
+            {
+                std::cout << "ERROR: Failure attempting to reduce line \"" << vec.at(currentLine) << "\"" << std::endl;
+            }
         }
+        exportSuccess();
     }
-    else{
-        cout<<"Sorted data was not imported to reducer" <<endl;
+    else
+    {
+        cout<<"ERROR: Sorted data was not imported to reducer" <<endl;
         dataAttained = false;
     }
 
     return dataAttained;
-};
-
-
-std::string Reduce::configOutput(const std::string& key, const uint32_t& val) {
-    std::string configuredOutput = "(\"" + key + "\"";
-    for (size_t item = 0; item < val; item++) {
-        configuredOutput.append(key, val);
-    }
-    configuredOutput.append("");
-
-    return configuredOutput;
 }
 
-/*TO DO: WRITE COMMENTS reduce function
-take input vector from importData
-//for loop iterate through the input vector
-    //while it inserts reduced values into reduced_vector
-    //if statement to change boolean for executionComplete
-        //if input vector is empty, then executionComplete = true
-        //if not executionComplete = false cout <<error occurred << 
-        //if executionComplete = true
-
-    //for loop for embedding from vec to reduced vector 
-*/
-bool Reduce::reduce() {
-    //int& Iter start_val, int& Iter end_val
-   
-
-    bool executionComplete = false;
-    bool vectorSent = false;
-    std::vector<std::pair<string, uint32_t>> vec; //input data ("hello", [1,1,1], "hi", [1,1],...)
-    std::vector<std::pair<string, uint32_t>> reduced_vector; //currently empty, output vector
-    std::vector<std::string,uint32_t>::iterator rVec;
-
-    int total_sum = 0; //total at each keyword
-    
-    if (executionComplete = false) {
-            for (std::vector<std::string,uint32_t>::iterator rVec = vec.begin(); rVec != vec.end(); ++rVec) {
-                vec.push_back(configOutput(rVec->first, rVec->second));
-
-             while (auto i : vec; vec[i].second.begin() != vec[i].second.end(); i++) {
-                int total_sum = i;
-                reduced_vector.push_back(configOutput(vec->first, vec->second));
-        };
-
-        executionComplete = true;
-        //return executionComplete;
-        
-        }
-
-    }
-    else {
-        cout<< "execution was not completed" <<endl;
-        executionComplete = false;
-        //return executionComplete;
-    }
-        
-
-    return executionComplete; //return executionComplete; //false defines that task has failed
-}
-
-
-/*TO DO: WRITE COMMENTS
-export the reduced values and its key from a vector to a file,
-send it to FileIOManagement*/
-
-bool Reduce::exportReduce(const string filename, const string key, const int val) 
-    
+bool Reduce::reduce(const std::string line)
 {
-    bool executionComplete;
-    if (executionComplete = true) {
+    std::pair<std::string, uint32_t> outputPair;
+    if (parseLine(line, outputPair))
+    {
         
-        bool vectorSent {false};
-        //writes out all data to an export file
-        string buffFile;
-        //reduced_vector; //output vector
-        std::vector<std::pair<string, int>> reduced_vector; //output vector
-
-        IO_management.writeVectorToFile(this->intermediateDirectory, buffFile, reduced_vector);
-        bool vectorSent {true};
-        return vectorSent; //false define vector was not exported
-
+        Export(outputFileName, outputPair);
     }
-    else{
-        cout<< "was not able to export the reduced file" <<endl;
-        bool vectorSent = false;
-        return vectorSent;
+    else
+    {
+        std::cout << std::endl;
     }
-
     
+    return true;
+
+}
+
+bool Reduce::Export(const std::string& fileName, std::pair<std::string, uint32_t>& outputPair)
+{
+    std::string formattedOutput = "\"" + outputPair.first + "\", " + std::to_string(outputPair.second);
+    std::vector<std::string> tempVector;
+    tempVector.push_back(formattedOutput);
+    IO_management.writeVectorToFile(outputDirectory, fileName, tempVector, true);
+    return true;
+}
+
+bool Reduce::parseLine(const std::string line, std::pair<std::string, uint32_t>& outputPair)
+{
+    bool result = true;
+    std::string temp = line;
+    std::string isoWord;
+    uint32_t instances;
+    const std::string finalLine;
+    
+    if (!IsolateWord(line, "\"", "\"", isoWord))
+    {
+        std::cout << "ERROR: Unable to get key word from Line " << std::endl;
+    }
+    else if (!getNumberOfInstances(temp, ",", instances))
+    {
+        std::cout << "Error: Unable to get Instances for key " << isoWord << std::endl;
+        result = false;
+    }
+    else
+    {
+        outputPair = std::make_pair(isoWord, instances);
+    }
+
+    return result;
 }
 
 
-/*TO DO: WRITE COMMENTS ON exportSuccess
-export a success file once the reduce operation has successfully completed 
-*/
-bool Reduce::exportSuccess(const string filename) {
+bool Reduce::getNumberOfInstances(std::string format, std::string delim, uint32_t& instance)
+{
+    size_t firstPosition = format.find(delim);
+    if (firstPosition == std::string::npos)
+    {
+        return false;
+    }
+    size_t formatSize = format.size();
+    std::string subString = format.substr(firstPosition);
+    std::string::difference_type n = std::count(subString.begin(), subString.end(), '1');
+    instance = static_cast<uint32_t>(n);
+    return true;
+}
+
+bool Reduce::IsolateWord(const std::string& formattedWord, const std::string& startString, const std::string& endString, std::string& isloatedWord)
+{
+    size_t firstPosition = formattedWord.find(startString);
+    size_t secondPosition = formattedWord.find(endString, firstPosition + 1);
+    if ((firstPosition == std::string::npos) || (secondPosition == std::string::npos)) return false;
+    isloatedWord = formattedWord.substr(firstPosition + 1, secondPosition - (firstPosition + 1));
+
+    return true;
+}
+
+
+void Reduce::exportSuccess() 
+{
     //write success and export it to an output file
     //after the entire input vector has been reduced and outputed.
 
-    bool vectorSent;
-
-    if (vectorSent = true) { //reduce function finishes its execuation loop, then go ahead with this statement
-        ofstream success_file;
-        success_file.open ("successs.txt");
-        success_file <<"SUCCESS!\n";
-        success_file.close();
-    }
-
-    else {
-        cout << "Reduced file has not been sent, will not allow success to occur" << endl;
-        vectorSent = false;
-    };
-    return vectorSent;
-    
-}        
-
-/*empty buffer */
-bool Reduce::emptyBuffer(){
-    //clear the cache 
-};
-
-ostream& operator<<(ostream& output, const vec& v)
-{
-    output << "(" << v.first << ":" << v.second << ")"; //formatting the output results
-    return output;
-};
+        std::string fileName = "success.txt";
+        std::vector<std::string> tempVector;
+        tempVector.push_back("");
+        IO_management.writeVectorToFile(outputDirectory, fileName, tempVector);
+        return;
+}

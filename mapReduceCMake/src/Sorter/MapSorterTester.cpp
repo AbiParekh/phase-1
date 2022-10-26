@@ -13,6 +13,7 @@
 void ReportResults(std::map<std::string, bool> outputMap);
 
 bool Test_IsolateWord();
+bool getNumberOfInstances(std::string format, std::string delim, uint32_t& instance);
 
 
 /*
@@ -58,6 +59,52 @@ int main(int argc, char* argv[])
 	std::pair<std::string, bool> IsolateWord("Test_writeVectorToFiley", Test_IsolateWord());
 	testResults.insert(IsolateWord);
 
+	
+	std::string q1 = "(\"six\", 1, 1, 1, 1, 1, 1)";
+	std::string q2 = "(\"one\", 1)";
+	std::string q3 = "(\"zero\",  )";
+	std::string q4 = "(\"10\", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)";
+	uint32_t in1 = 0;
+	uint32_t in2 = 0;
+	uint32_t in3 = 0;
+	uint32_t in4 = 0;
+
+	if (!getNumberOfInstances(q1, ",", in1))
+	{
+		std::cout << "ERROR: Q1" << std::endl;
+	}
+	else
+	{
+		std::cout << "Q1 has " << in1 << " instances " << std::endl;
+	}
+
+	if (!getNumberOfInstances(q2, ",", in2))
+	{
+		std::cout << "ERROR: Q1" << std::endl;
+	}
+	else
+	{
+		std::cout << "Q1 has " << in2 << " instances " << std::endl;
+	}
+
+	if (!getNumberOfInstances(q3, ",", in3))
+	{
+		std::cout << "ERROR: Q1" << std::endl;
+	}
+	else
+	{
+		std::cout << "Q3 has " << in3 << " instances " << std::endl;
+	}
+
+	if (!getNumberOfInstances(q4, ",", in4))
+	{
+		std::cout << "ERROR: Q1" <<  std::endl;
+	}
+	else
+	{
+		std::cout << "Q4 has " << in4 << " instances " << std::endl;
+	}
+	
 	ReportResults(testResults);
 
 	return 0;
@@ -117,4 +164,20 @@ bool Test_IsolateWord()
 	}
 
 	return results_IsolateWord;
+}
+
+
+
+bool getNumberOfInstances(std::string format, std::string delim, uint32_t& instance)
+{
+	size_t firstPosition = format.find(delim);
+	if (firstPosition == std::string::npos)
+	{
+		return false;
+	}
+	size_t formatSize = format.size();
+	std::string subString = format.substr(firstPosition);
+	std::string::difference_type n = std::count(subString.begin(), subString.end(), '1');
+	instance = static_cast<uint32_t>(n);
+	return true;
 }
