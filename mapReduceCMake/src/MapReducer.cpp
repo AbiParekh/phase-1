@@ -72,7 +72,11 @@ bool MapReducer::validateDirectories()
 		{
 			// Stuff exist in output directory...... kill it
 			std::string totalFilePath = outputDirectory_ + "\\" + fileList.at(count);
-			fileManager.deleteFile(totalFilePath);
+			if (!fileManager.deleteFile(totalFilePath))
+			{
+				std::cout << "Unable to Delete (" << totalFilePath << ") in the OUtput Directory" << std::endl;
+				results = false;
+			}
 		}
 
 	}

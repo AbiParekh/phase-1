@@ -45,10 +45,9 @@ bool FileIOManagement::getListOfTextFiles(const std::string& inputFolder, std::v
 
 }
 
-void FileIOManagement::deleteFile(const std::string& totalFilePath)
+bool FileIOManagement::deleteFile(const std::string& totalFilePath)
 {
-	doDeleteFile(totalFilePath);
-	return;
+	return doDeleteFile(totalFilePath);
 }
 
 
@@ -218,8 +217,7 @@ bool FileIOManagement::doCreateDirectory(const std::string& folderPath, const st
 	return result;
 }
 
-void FileIOManagement::doDeleteFile(const std::string& totalFilePath)
+bool FileIOManagement::doDeleteFile(const std::string& totalFilePath)
 {
-	fs::remove(totalFilePath);
-	return;
+	return 	fs::remove(totalFilePath);
 }

@@ -65,7 +65,7 @@ public:
 	bool createDirectory(const std::string& folderPath, const std::string& newFolderName);
 
 
-	void deleteFile(const std::string& totalFilePath);
+	bool deleteFile(const std::string& totalFilePath);
 
 private:
 	/// <summary>
@@ -100,7 +100,7 @@ private:
 	/// </summary>
 	bool doCreateDirectory(const std::string& folderPath, const std::string& newFolderName);
 
-	void doDeleteFile(const std::string& totalFilePath);
+	bool doDeleteFile(const std::string& totalFilePath);
 
 
 };

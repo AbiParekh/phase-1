@@ -57,6 +57,7 @@ bool Reduce::reduceFile(const string& folderPath, const string& fileName, std::s
     //declare an empty vector
     std::vector<std::string> vec;
     bool dataAttained = true;
+ 
     if (IO_management.readFileIntoVector(folderPath, fileName, vec)) 
     {
 
