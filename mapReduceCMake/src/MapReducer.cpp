@@ -82,7 +82,11 @@ bool MapReducer::validateDirectories()
 	}
 	return results;
 }
-
+/*doReduce function within the class ensures a directory exists, then proceeds read files in the input directory, it takes files from the input directory and writes
+the file content into a vector named lines, calling the map function, it takes each line processes it by removing an punctuation and emits a value 1 for each key.
+after it completes it flushes and empties the cache. Now calling the sorter class, it shuffles each value to its respective keyword, such as ([for], [1,1,1,1])
+Later the reducer is called to collect each instance for a ketword and sum it to reduce the amount of memory used by each value. after completion it exports the data
+to the outputDirectory*/
 bool MapReducer::doReduce(std::string& outputFileName)
 {
 	if (validateDirectories())
