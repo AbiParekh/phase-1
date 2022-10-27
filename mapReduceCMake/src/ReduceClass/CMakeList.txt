@@ -1,0 +1,40 @@
+cmake_minimum_required(VERSION 3.8)
+
+set(CXX_STANDARD 17)
+
+#specify project
+project("Reducer")
+
+#include specific files for the project to run
+#File management class for handling directories
+set(FileIO_files 
+${TOP_LEVEL_ROOT_DIR}/src/FileIO/FileIO.cpp
+${TOP_LEVEL_ROOT_DIR}/src/FileIO/FileIO.h)
+
+
+#sorter class files for input data
+set(SorterFiles
+${TOP_LEVEL_ROOT_DIR}/src/Sorter/MapReduceSorter.cpp
+${TOP_LEVEL_ROOT_DIR}/src/Sorter/MapReduceSorter.h
+${TOP_LEVEL_ROOT_DIR}/src/Sorter/MapSorterTester.cpp)
+
+# add an executable for project reducer
+add_executable (Reducer "Reduce.cpp" "Reduce.h" "Test/testReduce.cpp" "Test/testReduce.h" ${FileIO_files})
+
+
+#source for project executable 
+add_executable(ReduceClass "Reduce.cpp" "Reduce.h")
+
+
+target_include_directories(${PROJECT_NAME}
+PRIVATE
+${TOP_LEVEL_ROOT_DIR}/src/FileIO
+${TOP_LEVEL_ROOT_DIR}/src/Sorter/
+${TOP_LEVEL_ROOT_DIR}/src/Reduce
+${TOP_LEVEL_ROOT_DIR}/src/Reduce/Test)
+
+if (CMAKE_VERSION VERSION_GREATER 3.12)
+    set_property(TARGET Reducer PROPERTY CXX_STANDARD 17)
+endif()
+
+
